@@ -191,3 +191,215 @@ html[data-theme="dark"] .model-fallback{color:#fff}
 @media(max-width:900px){.site-header{height:70px;padding-inline:22px}.menu-toggle{display:grid}.nav-links{display:none;position:absolute;top:100%;left:0;right:0;padding:15px 22px 20px;background:var(--cream);box-shadow:0 14px 25px #243b3812;align-items:stretch;gap:0}.nav-links.open{display:flex;flex-direction:column}.nav-links>a{padding:12px 4px}.nav-links .nav-button{text-align:center;margin-top:8px}}
 @media(max-width:760px){.site-header{height:66px;gap:8px}.header-actions{gap:8px}.theme-toggle{width:36px;height:36px}.menu-toggle{display:grid;background:transparent;border:1px solid var(--line);border-radius:50%;padding:8px 9px;color:var(--ink)}.hero{height:calc(100svh - 118px);min-height:640px}.hero-arc{border-radius:0 0 50% 50% / 0 0 18% 18%}.hero-title{font-size:clamp(64px,12.5vw,92px)}.title-one{top:18%}.title-two{bottom:20%;font-size:clamp(56px,10.7vw,80px)}.hero-cta{bottom:5%}}
 @media(max-width:420px){.hero{min-height:620px}.hero-arc{border-radius:0 0 50% 50% / 0 0 14% 14%}.hero-title{font-size:clamp(42px,12.5vw,53px);letter-spacing:-.065em;line-height:.98}.title-one{top:21%}.title-two{right:5%;bottom:20%;font-size:clamp(39px,11.5vw,49px)}.hero-locations{top:auto;right:5%;bottom:7%;grid-template-columns:auto auto;gap:4px 10px;text-align:right;font-size:6px}.hero-locations b{font-size:7px}.hero-cta{bottom:1%;left:5%;max-width:58%;padding:9px;font-size:6px}.scroll-hint{bottom:1%;font-size:6px}}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VISUAL ENHANCEMENT LAYER – Royal Typography, Animations & Polish
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Royal serif variable ──────────────────────────────────────────────────── */
+:root{--royal:'Cormorant Garamond','Playfair Display',Georgia,serif}
+
+/* ── Enhanced base typography ──────────────────────────────────────────────── */
+body{font-size:15px;line-height:1.7;letter-spacing:.01em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+/* ── Topline bar ─ glass feel ─────────────────────────────────────────────── */
+.topline{font-size:10px;letter-spacing:.06em;backdrop-filter:blur(8px)}
+.topline>a{transition:opacity .25s ease}
+.topline>a:hover{opacity:.75}
+
+/* ── Header ─ refined glass morphism ──────────────────────────────────────── */
+.site-header{backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);transition:box-shadow .4s ease}
+.site-header:hover{box-shadow:0 4px 30px #173b4c08}
+
+/* ── Navigation ─ animated underlines ─────────────────────────────────────── */
+.nav-links>a{position:relative;font-size:12.5px;letter-spacing:.03em;text-decoration:none!important}
+.nav-links>a:not(.nav-button)::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:1.5px;background:var(--teal);transition:width .35s cubic-bezier(.4,0,.2,1)}
+.nav-links>a:not(.nav-button):hover::after{width:100%}
+.nav-links .nav-button{transition:transform .3s ease,box-shadow .3s ease,background .3s ease}
+.nav-links .nav-button:hover{transform:translateY(-2px);box-shadow:0 8px 24px #173f5025}
+
+/* ── Theme toggle ─ glow on hover ─────────────────────────────────────────── */
+.theme-toggle{transition:background .3s ease,color .3s ease,transform .3s ease,box-shadow .3s ease}
+.theme-toggle:hover{box-shadow:0 0 20px #246670aa,0 0 40px #24667044;transform:rotate(-12deg) scale(1.08)}
+
+/* ── Hero section ─ dramatic typography ────────────────────────────────────── */
+.hero-title{font-family:var(--royal)!important;font-weight:300;text-shadow:0 2px 40px #173b4c10}
+.title-two em{font-weight:300;font-style:italic}
+
+/* ── Hero CTA ─ elegant hover ─────────────────────────────────────────────── */
+.hero-cta{transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s ease,letter-spacing .4s ease;font-size:10px;letter-spacing:.12em}
+.hero-cta:hover{transform:translateY(-4px);box-shadow:0 18px 45px #173f5030;letter-spacing:.16em}
+
+/* ── Hero meta ─ animated separator ───────────────────────────────────────── */
+.hero-meta i{transition:width .5s ease}
+.hero-meta:hover i{width:40px}
+
+/* ── Hero aside ─ refined italic ──────────────────────────────────────────── */
+.hero-aside{font-family:var(--royal);font-style:italic;font-weight:300;font-size:16px;line-height:1.65}
+.hero-aside span{font-size:28px;transition:transform .5s ease}
+.hero-aside:hover span{transform:rotate(90deg)}
+
+/* ── Scroll hint ─ bouncing animation ─────────────────────────────────────── */
+.scroll-hint i{animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{width:23px;opacity:.7}50%{width:35px;opacity:1}}
+
+/* ── Section headings ─ royal serif ───────────────────────────────────────── */
+.intro h2,.section-head h2,.coverage h2,.closing h2,.team-heading h2,.referrals h2{font-family:var(--royal)!important;font-weight:300;letter-spacing:-.04em}
+.faq-heading h2{font-family:var(--royal)!important;font-weight:400}
+
+/* ── Eyebrow labels ─ refined spacing ─────────────────────────────────────── */
+.eyebrow{font-size:10px;letter-spacing:.2em;font-weight:600;position:relative;display:inline-block}
+
+/* ── Intro section ─ generous spacing ─────────────────────────────────────── */
+.intro{padding:150px 9vw 130px}
+.intro-copy{font-size:16px;line-height:1.85;max-width:480px}
+
+/* ── Under-links ─ animated hover ─────────────────────────────────────────── */
+.under-link{position:relative;transition:gap .35s ease,color .3s ease;font-size:12.5px}
+.under-link:hover{gap:32px;color:var(--teal)}
+.under-link span{transition:transform .35s ease}
+.under-link:hover span{transform:translate(4px,-4px)}
+
+/* ── Service area cards ─ luxurious hover ─────────────────────────────────── */
+.area-card{transition:transform .5s cubic-bezier(.4,0,.2,1),border-color .4s ease,box-shadow .5s ease,background .4s ease;overflow:hidden}
+.area-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--teal),transparent);transform:scaleX(0);transition:transform .5s ease;transform-origin:left}
+.area-card:hover::before{transform:scaleX(1)}
+.area-card:hover{transform:translateY(-10px);box-shadow:0 25px 60px #173b4c14;border-color:#88a8af}
+.area-card h3{font-family:var(--royal);font-weight:500;font-size:24px;letter-spacing:-.02em;transition:color .3s ease}
+.area-card:hover h3{color:var(--teal)}
+.area-card>i{transition:transform .3s ease,color .3s ease}
+.area-card:hover>i{transform:translate(3px,-3px);color:var(--teal)}
+.area-card p{font-size:13px;line-height:1.75}
+
+/* ── Population row ─ pill styling ────────────────────────────────────────── */
+.population-row>p:last-child{font-size:11px;gap:10px;line-height:2}
+
+/* ── Recognition bar ─ shimmer ────────────────────────────────────────────── */
+.recognition{overflow:hidden;transition:background .4s ease}
+.recognition::before{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,#ffffff20,transparent);animation:shimmer 4s ease-in-out infinite}
+@keyframes shimmer{0%{left:-100%}100%{left:200%}}
+.recognition a{transition:opacity .3s ease}
+.recognition a:hover{opacity:.7}
+
+/* ── Team section ─ elegant cards ─────────────────────────────────────────── */
+.team-section{padding:120px max(7vw,30px) 130px}
+.team-photo{border-radius:6px 24px 6px 6px;transition:border-radius .5s ease}
+.team-person:hover .team-photo{border-radius:6px 6px 6px 6px}
+.team-photo img{transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .6s ease}
+.team-person:hover .team-photo img{transform:scale(1.06);filter:saturate(1.1) brightness(1.02)}
+.team-person-copy h3{font-family:var(--royal);font-weight:500;font-size:21px;letter-spacing:-.02em}
+.team-person-copy p{font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.team-person-copy>span{transition:transform .3s cubic-bezier(.4,0,.2,1),color .3s ease}
+.team-person:hover .team-person-copy>span{transform:translate(5px,-5px);color:var(--teal)}
+
+/* ── Coverage card ─ refined ──────────────────────────────────────────────── */
+.coverage-card{transition:transform .6s cubic-bezier(.4,0,.2,1),box-shadow .6s ease;border-radius:6px 32px 6px 6px}
+.coverage-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px #173b4c18}
+.coverage-card h3{font-family:var(--royal);font-weight:400;font-size:32px;letter-spacing:-.02em}
+.coverage-card li{font-size:13px;transition:padding-left .3s ease}
+.coverage-card li:hover{padding-left:8px}
+
+/* ── FAQ section ─ animated details ───────────────────────────────────────── */
+.faq-list details{transition:padding .35s ease,background .35s ease;border-radius:4px;padding:22px 16px}
+.faq-list details:hover{background:#f0f5f6}
+.faq-list details[open]{background:#edf3f5;padding:26px 16px 22px}
+.faq-list summary{font-size:16px;transition:color .3s ease,padding-left .3s ease}
+.faq-list summary:hover{color:var(--teal);padding-left:4px}
+.faq-list summary::after{transition:transform .35s cubic-bezier(.4,0,.2,1),color .3s ease}
+.faq-list details p{font-size:14px;line-height:1.8;animation:fadeSlideIn .35s ease-out}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Referrals section ─ refined ──────────────────────────────────────────── */
+.referrals{padding:80px max(10vw,35px)}
+.referrals h2{font-family:var(--royal);font-weight:300}
+.referrals>a,.crisis>a{transition:gap .3s ease,border-color .3s ease,color .3s ease}
+.referrals>a:hover,.crisis>a:hover{gap:26px;border-color:var(--teal);color:var(--teal)}
+
+/* ── Crisis section ─ subtle ──────────────────────────────────────────────── */
+.crisis{padding:44px max(10vw,35px)}
+.crisis h2{font-size:18px;line-height:1.55}
+
+/* ── Closing CTA section ─ dramatic ───────────────────────────────────────── */
+.closing{padding:120px 24px 140px}
+.closing h2{font-family:var(--royal)!important;font-weight:300;line-height:1.06}
+.closing>p:not(.eyebrow){font-size:14px;margin:8px 0 0;letter-spacing:.02em}
+.closing>a{font-size:12px;padding:16px 24px;transition:transform .35s cubic-bezier(.4,0,.2,1),background .3s ease,box-shadow .3s ease,letter-spacing .35s ease}
+.closing>a:hover{transform:translateY(-5px);box-shadow:0 16px 40px #0c1a2244;letter-spacing:.05em}
+
+/* ── Footer ─ elegant layout ──────────────────────────────────────────────── */
+footer{padding:65px max(7vw,30px) 28px}
+.footer-main{padding-bottom:50px}
+.footer-column>a{transition:color .3s ease,padding-left .3s ease}
+.footer-column>a:hover{color:#fff;padding-left:4px;text-decoration:none!important}
+.footer-column .footer-book{transition:transform .3s ease,box-shadow .3s ease}
+.footer-column .footer-book:hover{transform:translateY(-3px);box-shadow:0 8px 24px #173b4c20}
+.footer-brand-block p{font-size:12px;line-height:1.8}
+
+/* ── Scroll reveal ─ refined entrance ─────────────────────────────────────── */
+.scroll-reveal{opacity:0;transform:translate3d(0,35px,0);transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms),transform 1s cubic-bezier(.16,1,.3,1) var(--reveal-delay,0ms)}
+.scroll-reveal.is-visible{opacity:1;transform:translate3d(0,0,0)}
+
+/* ── Loader ─ more elegant feel ───────────────────────────────────────────── */
+.loader-center p{font-size:9px;letter-spacing:.22em}
+.loader-bottom{font-size:9px;letter-spacing:.2em}
+.loader-orbit{width:90px;height:90px}
+
+/* ── Decorative gradient line on hero arc ──────────────────────────────────── */
+.hero-arc::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,#a9c2c866,#88bfc866,#a9c2c866,transparent)}
+
+/* ── Hero locations ─ refined typography ───────────────────────────────────── */
+.hero-locations{font-size:8px;letter-spacing:.12em}
+.hero-locations b{font-family:var(--royal);font-size:11px;font-weight:500;letter-spacing:.02em}
+
+/* ── Dark mode FAQ hover ──────────────────────────────────────────────────── */
+html[data-theme="dark"] .faq-list details:hover{background:#141d22}
+html[data-theme="dark"] .faq-list details[open]{background:#161f25}
+html[data-theme="dark"] .recognition::before{background:linear-gradient(90deg,transparent,#ffffff08,transparent)}
+
+/* ── Dark mode card accents ───────────────────────────────────────────────── */
+html[data-theme="dark"] .area-card::before{background:linear-gradient(90deg,transparent,#a1d6dc,transparent)}
+html[data-theme="dark"] .area-card:hover{border-color:#4a6a74;box-shadow:0 25px 60px #00000030}
+html[data-theme="dark"] .area-card:hover h3{color:#a1d6dc}
+html[data-theme="dark"] .hero-arc::after{background:linear-gradient(90deg,transparent,#3a444c66,#4a5a6466,#3a444c66,transparent)}
+html[data-theme="dark"] .theme-toggle:hover{box-shadow:0 0 20px #a1d6dcaa,0 0 40px #a1d6dc44}
+html[data-theme="dark"] .coverage-card:hover{box-shadow:0 30px 60px #00000030}
+html[data-theme="dark"] .hero-cta:hover{box-shadow:0 18px 45px #00000030}
+html[data-theme="dark"] .closing>a:hover{box-shadow:0 16px 40px #00000044}
+html[data-theme="dark"] .footer-column>a:hover{color:#e8f0f3}
+html[data-theme="dark"] .nav-links .nav-button:hover{box-shadow:0 8px 24px #00000030}
+html[data-theme="dark"] .team-photo{border-radius:6px 24px 6px 6px}
+
+/* ── Smooth scroll indicator bounce (for reduced-motion, hidden) ──────────── */
+@media(prefers-reduced-motion:reduce){
+  .scroll-hint i{animation:none}
+  .recognition::before{animation:none}
+  .hero-aside span,.under-link span,.area-card>i,.team-person-copy>span,.faq-list summary::after,.footer-column>a,.referrals>a,.crisis>a,.closing>a,.hero-cta,.nav-links .nav-button,.theme-toggle,.coverage-card,.area-card,.team-photo,.coverage-card li,.faq-list details,.faq-list summary{transition:none!important}
+  .faq-list details p{animation:none}
+}
+
+/* ── Mobile adjustments for enhanced styles ────────────────────────────────── */
+@media(max-width:760px){
+  .intro{padding:120px 25px 100px}
+  .hero-aside{font-size:12px}
+  .area-card h3{font-size:21px}
+  .area-card p{font-size:12px}
+  .team-section{padding:90px 22px 100px}
+  .team-person-copy h3{font-size:18px}
+  .team-person-copy p{font-size:9px}
+  .closing{padding:90px 24px 110px}
+  .referrals{padding:60px 24px}
+  .crisis{padding:36px 24px}
+  .faq-list details{padding:18px 12px}
+  .faq-list summary{font-size:14px}
+  .faq-list details p{font-size:13px}
+  .team-photo{border-radius:4px 18px 4px 4px}
+  .coverage-card{border-radius:4px 24px 4px 4px}
+  footer{padding:50px 22px 22px}
+}
+@media(max-width:420px){
+  .hero-aside{font-size:10px}
+  .intro-copy{font-size:14px}
+  .area-card h3{font-size:19px}
+  .team-person-copy h3{font-size:16px}
+  .closing>a{font-size:10px;padding:13px 18px}
+}

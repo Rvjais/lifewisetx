@@ -243,17 +243,17 @@ function App() {
   }, [siteLoading]);
   useEffect(() => {
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const targets = document.querySelectorAll('.intro-tag, .intro > div:last-child, .area-card, .coverage > div, .closing .eyebrow, .closing h2, .closing > p:not(.eyebrow), .closing > a');
+    const targets = document.querySelectorAll('.intro-tag, .intro > div:last-child, .area-card, .coverage > div, .closing .eyebrow, .closing h2, .closing > p:not(.eyebrow), .closing > a, .team-person, .faq-list details, .recognition, .referrals > div, .referrals > a, .crisis > div, .crisis > a, .coverage-card, .section-head, .team-heading, .population-row, .faq-heading');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('is-visible');
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -4% 0px' });
     targets.forEach((target, index) => {
       target.classList.add('scroll-reveal');
-      target.style.setProperty('--reveal-delay', `${(index % 4) * 95}ms`);
+      target.style.setProperty('--reveal-delay', `${(index % 6) * 80}ms`);
       observer.observe(target);
     });
     return () => observer.disconnect();
