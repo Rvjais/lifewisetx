@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 
@@ -190,33 +190,50 @@ function App() {
     try { return window.localStorage.getItem('lifewise-theme') === 'dark'; }
     catch { return false; }
   });
-  const [themeReveal, setThemeReveal] = useState(null);
   const [siteLoading, setSiteLoading] = useState(true);
   const finishLoading = useCallback(() => setSiteLoading(false), []);
   useEffect(() => {
-    if (themeReveal) return;
     document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
     try { window.localStorage.setItem('lifewise-theme', darkMode ? 'dark' : 'light'); } catch { /* Storage may be disabled. */ }
     window.dispatchEvent(new CustomEvent('lifewise-theme-change', { detail: { dark: darkMode } }));
-  }, [darkMode, themeReveal]);
-  useEffect(() => {
-    if (themeReveal) {
-      const timeout = window.setTimeout(() => setThemeReveal(null), 900);
-      return () => window.clearTimeout(timeout);
-    }
-  }, [themeReveal]);
+  }, [darkMode]);
   const toggleTheme = (event) => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setDarkMode((value) => !value);
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nextDarkMode = !darkMode;
+
+    // Apply theme immediately (updates DOM + storage + 3-D model colours).
+    const applyTheme = () => {
+      setDarkMode(nextDarkMode);
+    };
+
+    // No View Transitions support or reduced-motion: switch instantly.
+    if (prefersReduced || !document.startViewTransition) {
+      applyTheme();
       return;
     }
-    const nextDarkMode = !darkMode;
+
+    // Compute the clip-path origin from the toggle button centre.
     const rect = event.currentTarget.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
-    setThemeReveal({ x, y, radius, dark: nextDarkMode, key: Date.now() });
-    window.setTimeout(() => setDarkMode(nextDarkMode), 470);
+    const x = Math.round(rect.left + rect.width / 2);
+    const y = Math.round(rect.top + rect.height / 2);
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    // Expose the origin to CSS via custom properties on <html>.
+    document.documentElement.style.setProperty('--vt-x', `${x}px`);
+    document.documentElement.style.setProperty('--vt-y', `${y}px`);
+    document.documentElement.style.setProperty('--vt-r', `${endRadius}px`);
+
+    const transition = document.startViewTransition(applyTheme);
+
+    // Clean up custom properties once the transition is fully done.
+    transition.finished.then(() => {
+      document.documentElement.style.removeProperty('--vt-x');
+      document.documentElement.style.removeProperty('--vt-y');
+      document.documentElement.style.removeProperty('--vt-r');
+    });
   };
   useEffect(() => {
     if (!siteLoading) return;
@@ -255,7 +272,7 @@ function App() {
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}><span /><span /></button>
       </div>
     </header>
-    {themeReveal && <div key={themeReveal.key} className={`theme-reveal${themeReveal.dark ? ' to-dark' : ' to-light'}`} style={{ '--reveal-x': `${themeReveal.x}px`, '--reveal-y': `${themeReveal.y}px`, '--reveal-radius': `${themeReveal.radius}px` }} aria-hidden="true" />}
+
     <ModelStage onReady={finishLoading} />
     <div className={`loader-screen${siteLoading ? ' is-loading' : ' is-loaded'}`} aria-hidden={!siteLoading}>
       <div className="loader-center"><div className="loader-orbit"><i /></div><p>MAKING A LITTLE SPACE TO BEGIN</p></div>

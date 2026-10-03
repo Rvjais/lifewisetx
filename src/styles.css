@@ -101,11 +101,32 @@ footer{display:block;padding:58px max(7vw,30px) 23px}.footer-main{display:grid;g
 .theme-toggle{width:38px;height:38px;display:grid;place-items:center;border:1px solid #9db3ba;border-radius:50%;background:transparent;color:var(--deep);cursor:pointer;transition:background .2s,color .2s,transform .2s}
 .theme-toggle:hover{background:#deeaec;transform:rotate(-8deg)}
 .theme-toggle svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.theme-reveal{position:fixed;z-index:1001;inset:0;pointer-events:none;clip-path:circle(0 at var(--reveal-x) var(--reveal-y));animation:theme-spread .9s cubic-bezier(.2,.75,.25,1) forwards}
-.theme-reveal.to-dark{background:#080a0c}
-.theme-reveal.to-light{background:#fbfaf6}
-@keyframes theme-spread{0%{clip-path:circle(0 at var(--reveal-x) var(--reveal-y));opacity:1}55%{clip-path:circle(var(--reveal-radius) at var(--reveal-x) var(--reveal-y));opacity:1}100%{clip-path:circle(var(--reveal-radius) at var(--reveal-x) var(--reveal-y));opacity:0}}
-@media(prefers-reduced-motion:reduce){.theme-reveal{display:none}}
+/* ── View-Transition circular theme reveal ───────────────────────────────────
+   ::view-transition-old(root)  – outgoing snapshot: stays flat, visible outside
+                                   the growing circle so the old theme is always
+                                   the "background" layer.
+   ::view-transition-new(root)  – incoming snapshot: grows in with a circular
+                                   clip-path whose origin is the toggle centre,
+                                   set as --vt-x / --vt-y / --vt-r on <html>.
+   The default cross-fade is suppressed; only the new layer animates.         */
+::view-transition-old(root) {
+  animation: none;
+  /* Keep the old page fully visible during the transition */
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: vt-circle-reveal 0.72s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  mix-blend-mode: normal;
+}
+@keyframes vt-circle-reveal {
+  from { clip-path: circle(0px at var(--vt-x, 50%) var(--vt-y, 50%)); }
+  to   { clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 50%)); }
+}
+/* Respect prefers-reduced-motion – View Transitions API fires but skips anim */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none !important; }
+}
 .menu-toggle{display:none}
 .hero{height:calc(100svh - 145px);min-height:620px;max-height:none}
 .hero-arc{inset:0;background:radial-gradient(ellipse at 52% 40%,#e5eff0 0%,#f4f7f8 68%);border-radius:0 0 50% 50% / 0 0 23% 23%;border-bottom:1px solid #a9c2c8;filter:drop-shadow(0 14px 18px #173b4c12)}
