@@ -36,7 +36,9 @@ function ModelStage({ onReady }) {
     fill.position.set(140, -80, 120);
     scene.add(fill);
     const modelMaterials = [];
+    let currentDarkTheme = document.documentElement.dataset.theme === 'dark';
     const applyModelTheme = (dark) => {
+      currentDarkTheme = dark;
       modelMaterials.forEach((material) => material.color.set(dark ? 0xffffff : 0x253f4d));
       hemi.color.set(dark ? 0xffffff : 0xf7f6ee);
       hemi.groundColor.set(dark ? 0x18212a : 0x315e53);
@@ -75,7 +77,7 @@ function ModelStage({ onReady }) {
       object.scale.setScalar(scale);
       object.traverse((part) => {
         if (!part.isMesh) return;
-        const material = new THREE.MeshStandardMaterial({ color: 0x253f4d, roughness: 0.7, metalness: 0.04, side: THREE.DoubleSide });
+        const material = new THREE.MeshStandardMaterial({ color: currentDarkTheme ? 0xffffff : 0x253f4d, roughness: 0.7, metalness: 0.04, side: THREE.DoubleSide });
         modelMaterials.push(material);
         material.onBeforeCompile = (shader) => {
           shader.uniforms.uPulseOrigin = pulseOrigin;
@@ -188,13 +190,34 @@ function App() {
     try { return window.localStorage.getItem('lifewise-theme') === 'dark'; }
     catch { return false; }
   });
+  const [themeReveal, setThemeReveal] = useState(null);
   const [siteLoading, setSiteLoading] = useState(true);
   const finishLoading = useCallback(() => setSiteLoading(false), []);
   useEffect(() => {
+    if (themeReveal) return;
     document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
     try { window.localStorage.setItem('lifewise-theme', darkMode ? 'dark' : 'light'); } catch { /* Storage may be disabled. */ }
     window.dispatchEvent(new CustomEvent('lifewise-theme-change', { detail: { dark: darkMode } }));
-  }, [darkMode]);
+  }, [darkMode, themeReveal]);
+  useEffect(() => {
+    if (themeReveal) {
+      const timeout = window.setTimeout(() => setThemeReveal(null), 900);
+      return () => window.clearTimeout(timeout);
+    }
+  }, [themeReveal]);
+  const toggleTheme = (event) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDarkMode((value) => !value);
+      return;
+    }
+    const nextDarkMode = !darkMode;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    setThemeReveal({ x, y, radius, dark: nextDarkMode, key: Date.now() });
+    window.setTimeout(() => setDarkMode(nextDarkMode), 470);
+  };
   useEffect(() => {
     if (!siteLoading) return;
     const previousOverflow = document.body.style.overflow;
@@ -226,15 +249,15 @@ function App() {
         <a href="#support" onClick={() => setMenuOpen(false)}>Services</a><a href="#team" onClick={() => setMenuOpen(false)}>Our team</a><a href="#approach" onClick={() => setMenuOpen(false)}>Our approach</a><a href="#coverage" onClick={() => setMenuOpen(false)}>Insurance &amp; pricing</a><a className="nav-button" href={consultation}>Book a consultation <b>↗</b></a>
       </nav>
       <div className="header-actions">
-        <button className="theme-toggle" type="button" onClick={() => setDarkMode((value) => !value)} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>
+        <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>
           {darkMode ? <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg> : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 14.2A8.4 8.4 0 0 1 9.8 3.2 8.8 8.8 0 1 0 20.8 14.2Z"/></svg>}
         </button>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}><span /><span /></button>
       </div>
     </header>
+    {themeReveal && <div key={themeReveal.key} className={`theme-reveal${themeReveal.dark ? ' to-dark' : ' to-light'}`} style={{ '--reveal-x': `${themeReveal.x}px`, '--reveal-y': `${themeReveal.y}px`, '--reveal-radius': `${themeReveal.radius}px` }} aria-hidden="true" />}
     <ModelStage onReady={finishLoading} />
     <div className={`loader-screen${siteLoading ? ' is-loading' : ' is-loaded'}`} aria-hidden={!siteLoading}>
-      <div className="loader-brand"><img src="/images/lifewise-logo.png" alt="" /></div>
       <div className="loader-center"><div className="loader-orbit"><i /></div><p>MAKING A LITTLE SPACE TO BEGIN</p></div>
       <div className="loader-bottom"><span>COUNSELING ACROSS TEXAS</span><span className="loader-line"><i /></span><span>LOADING YOUR EXPERIENCE</span></div>
     </div>
