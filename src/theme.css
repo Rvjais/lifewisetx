@@ -21,8 +21,8 @@ body{background:var(--cream);color:var(--ink);font-family:'DM Sans','Segoe UI',A
 @font-face{font-family:'Plus Jakarta';src:url('/fonts/plus-jakarta.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
 :root{--serif:'Playfair Display',Georgia,serif;font-family:'Haskoy','Plus Jakarta','Segoe UI',sans-serif}
 body{font-family:'Haskoy','Plus Jakarta','Segoe UI',sans-serif}
-.hero-title{font-family:var(--royal);font-weight:300;letter-spacing:-.05em}
-.hero-aside{font-family:var(--royal);font-style:italic;font-weight:300}
-.intro h2,.section-head h2,.coverage h2,.closing h2,.faq-heading h2,.referrals h2{font-family:var(--royal);font-weight:300;letter-spacing:-.04em}
+.hero-title{font-family:var(--royal);font-weight:600;letter-spacing:-.045em}
+.hero-aside{font-family:var(--royal);font-style:italic;font-weight:400}
+.intro h2,.section-head h2,.coverage h2,.closing h2,.faq-heading h2,.referrals h2{font-family:var(--royal);font-weight:600;letter-spacing:-.035em}
 .faq-heading h2 em{font-style:italic}
 .referrals h2{font-size:clamp(32px,4vw,49px);line-height:1.08}

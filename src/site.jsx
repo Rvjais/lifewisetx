@@ -10,9 +10,61 @@ const team = [
   { name: 'Hazel Dettmer', role: 'Group Facilitator', image: '/images/team-hazel.png', href: 'https://lifewisetx.com/hazel-dettmer/' },
 ];
 const areas = [
-  ['01', 'Individual counseling', 'Support for anxiety, depression, trauma, stress, burnout, and life transitions.'],
-  ['02', 'Neurodivergent & affirming care', 'Respectful counseling for neurodivergent adults and LGBTQIA+ clients.'],
-  ['03', 'Couples & relationships', 'Make room for clearer communication, connection, and understanding.'],
+  {
+    num: '01',
+    title: 'Individual Counseling & Anxiety',
+    desc: 'Support for anxiety, panic, depression, burnout, chronic stress, and navigating high-pressure life transitions.',
+    image: '/images/service-anxiety.png',
+    badge: 'Virtual & In-Person',
+  },
+  {
+    num: '02',
+    title: 'Neurodivergent & Affirming Care',
+    desc: 'Respectful, neurodiversity-affirming counseling for ADHDers, autistic adults, late-diagnosed individuals, and LGBTQIA+ clients.',
+    image: '/images/service-neurodivergence.png',
+    badge: 'Affirming & Unmasking',
+  },
+  {
+    num: '03',
+    title: 'Trauma & EMDR Processing',
+    desc: 'Somatic, grounded support to process deep emotional wounds, PTSD, relational trauma, and rebuild a sense of safety.',
+    image: '/images/service-trauma.png',
+    badge: 'Somatic & EMDR',
+  },
+  {
+    num: '04',
+    title: 'Couples & Relationship Health',
+    desc: 'Make room for clearer communication, de-escalating recurring conflict, and cultivating authentic emotional intimacy.',
+    image: '/images/service-relationships.png',
+    badge: 'Couples & Families',
+  },
+];
+
+const reflections = [
+  {
+    title: 'Why Counselors Need Therapy Too',
+    date: 'OCTOBER 2026',
+    category: 'COUNSELOR WELLNESS',
+    desc: 'The importance of secondary trauma awareness, emotional sustainability, and walking the walk as helping professionals.',
+    image: '/images/reflection-counseling.jpeg',
+    href: 'https://lifewisetx.com/reflections/',
+  },
+  {
+    title: 'We Create Our Identity',
+    date: 'SEPTEMBER 2026',
+    category: 'IDENTITY & BOUNDARIES',
+    desc: 'Navigating family roles, establishing healthy boundaries, and shedding old narratives to build a grounded sense of self.',
+    image: '/images/reflection-identity.jpeg',
+    href: 'https://lifewisetx.com/reflections/',
+  },
+  {
+    title: 'Sitting With Discomfort & Mindfulness',
+    date: 'SEPTEMBER 2026',
+    category: 'EMOTIONAL REGULATION',
+    desc: 'Understanding how somatic mindfulness and nervous system soothing help us weather life’s harder emotional seasons.',
+    image: '/images/reflection-mindfulness.jpeg',
+    href: 'https://lifewisetx.com/reflections/',
+  },
 ];
 
 function ModelStage({ onReady }) {
@@ -243,7 +295,7 @@ function App() {
   }, [siteLoading]);
   useEffect(() => {
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const targets = document.querySelectorAll('.intro-tag, .intro > div:last-child, .area-card, .coverage > div, .closing .eyebrow, .closing h2, .closing > p:not(.eyebrow), .closing > a, .team-person, .faq-list details, .recognition, .referrals > div, .referrals > a, .crisis > div, .crisis > a, .coverage-card, .section-head, .team-heading, .population-row, .faq-heading');
+    const targets = document.querySelectorAll('.intro-tag, .intro > div:last-child, .area-card, .coverage > div, .closing .eyebrow, .closing h2, .closing > p:not(.eyebrow), .closing > a, .team-person, .faq-list details, .recognition, .referrals > div, .referrals > a, .crisis > div, .crisis > a, .coverage-card, .section-head, .team-heading, .population-row, .faq-heading, .intro-media-card, .sanctuary-banner, .reflection-card');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
@@ -263,7 +315,7 @@ function App() {
     <header className="site-header">
       <a className="brand" href="#home" aria-label="LifeWise home"><img src="/images/lifewise-logo.png" alt="LifeWise Counseling and Wellness" /></a>
       <nav className={menuOpen ? 'nav-links open' : 'nav-links'}>
-        <a href="#support" onClick={() => setMenuOpen(false)}>Services</a><a href="#team" onClick={() => setMenuOpen(false)}>Our team</a><a href="#approach" onClick={() => setMenuOpen(false)}>Our approach</a><a href="#coverage" onClick={() => setMenuOpen(false)}>Insurance &amp; pricing</a><a className="nav-button" href={consultation}>Book a consultation <b>↗</b></a>
+        <a href="#support" onClick={() => setMenuOpen(false)}>Services</a><a href="#team" onClick={() => setMenuOpen(false)}>Our team</a><a href="#approach" onClick={() => setMenuOpen(false)}>Our approach</a><a href="#sanctuary" onClick={() => setMenuOpen(false)}>Sanctuary</a><a href="#reflections" onClick={() => setMenuOpen(false)}>Reflections</a><a href="#coverage" onClick={() => setMenuOpen(false)}>Insurance &amp; pricing</a><a className="nav-button" href={consultation}>Book a consultation <b>↗</b></a>
       </nav>
       <div className="header-actions">
         <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>
@@ -289,12 +341,104 @@ function App() {
     <div className="scroll-hint"><i /> SCROLL TO EXPLORE</div>
   </section>
   <section className="intro" id="approach">
-    <div className="intro-tag">01 — A PLACE TO START, AS YOU ARE</div>
-    <div><p className="eyebrow">YOU DON&apos;T NEED THE PERFECT WORDS</p><h2>We&apos;ll listen, and find a way forward <em>together.</em></h2><p className="intro-copy">Life can ask a lot of you. You don&apos;t have to have everything figured out before reaching out. We&apos;ll get to know what matters to you and help you find support that feels right, at a pace that works for you.</p><a className="under-link" href={consultation}>Start with a conversation <span>↗</span></a></div>
+    <div className="intro-tag"><span className="outline-num">01</span> A PLACE TO START, AS YOU ARE</div>
+    <div>
+      <p className="eyebrow">YOU DON&apos;T NEED THE PERFECT WORDS</p>
+      <h2>We&apos;ll listen, and find a way forward <em>together.</em></h2>
+      <p className="intro-copy">Life can ask a lot of you. You don&apos;t have to have everything figured out before reaching out. We&apos;ll get to know what matters to you and help you find support that feels right, at a pace that works for you.</p>
+      
+      <div className="intro-media-grid">
+        <div className="intro-media-card">
+          <div className="intro-media-frame">
+            <img src="/images/office-sanctuary.png" alt="LifeWise In-Person Counseling Office in North Fort Worth" loading="lazy" />
+          </div>
+          <div className="intro-media-label">
+            <strong>In-Person Sanctuary</strong>
+            <span>North Fort Worth, TX</span>
+          </div>
+        </div>
+        <div className="intro-media-card">
+          <div className="intro-media-frame">
+            <img src="/images/community-care.png" alt="Care Built Around the Person" loading="lazy" />
+          </div>
+          <div className="intro-media-label">
+            <strong>Care Built Around You</strong>
+            <span>Diverse, Affirming Approaches</span>
+          </div>
+        </div>
+      </div>
+
+      <a className="under-link" href={consultation}>Start with a conversation <span>↗</span></a>
+    </div>
   </section>
-  <section className="support" id="support"><div className="section-head"><div><p className="eyebrow">COUNSELING THAT MEETS YOU WHERE YOU ARE</p><h2>Support for the life<br />you&apos;re living.</h2></div><p>Practical, affirming counseling for the things you&apos;re carrying and the people you care about.</p></div><div className="area-grid">{areas.map(([n, title, desc]) => <article className="area-card" key={n}><span>{n}</span><h3>{title}</h3><p>{desc}</p><i>↗</i></article>)}</div><div className="population-row"><p className="eyebrow">CARE THAT UNDERSTANDS YOUR WORLD</p><p>First responders <i /> Military members &amp; veterans <i /> Helping professionals <i /> LGBTQIA+ clients <i /> Neurodivergent adults</p></div></section>
+  <section className="support" id="support"><div className="section-head"><div><p className="eyebrow">COUNSELING THAT MEETS YOU WHERE YOU ARE</p><h2>Support for the life<br />you&apos;re living.</h2></div><p>Practical, affirming counseling for the things you&apos;re carrying and the people you care about.</p></div>
+    <div className="area-grid">
+      {areas.map((area) => (
+        <article className="area-card" key={area.num}>
+          <div className="area-card-thumb">
+            <img src={area.image} alt={area.title} loading="lazy" />
+            <span className="area-badge">{area.badge}</span>
+          </div>
+          <div className="area-card-body">
+            <div className="area-card-header">
+              <span className="area-card-num">{area.num}</span>
+              <i>↗</i>
+            </div>
+            <h3>{area.title}</h3>
+            <p>{area.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div className="population-row"><p className="eyebrow">CARE THAT UNDERSTANDS YOUR WORLD</p><p>First responders <i /> Military members &amp; veterans <i /> Helping professionals <i /> LGBTQIA+ clients <i /> Neurodivergent adults</p></div>
+  </section>
   <section className="recognition"><span className="recognition-star">✳</span><p>Grounded, human care. <a href="https://lifewisetx.com/featured-in-the-dallas-voyager/">Read our feature in Dallas Voyager <b>↗</b></a></p></section>
   <section className="team-section" id="team"><div className="team-heading"><div><p className="eyebrow">THE PEOPLE BEHIND YOUR CARE</p><h2>A team with room<br />for <em>your story.</em></h2></div><div><p>Our team brings different personalities, backgrounds, strengths, and approaches to the work. We can help you find a provider who feels right for you.</p><a className="under-link" href="https://lifewisetx.com/careteam/">Get to know the team <span>↗</span></a></div></div><div className="team-grid">{team.map((person, index) => <a className="team-person" key={person.name} href={person.href}><div className={`team-photo team-photo-${index + 1}`}><img src={person.image} alt={person.name} loading="lazy" /></div><div className="team-person-copy"><div><h3>{person.name}</h3><p>{person.role}</p></div><span aria-hidden="true">↗</span></div></a>)}</div></section>
+  
+  <section className="sanctuary-banner" id="sanctuary">
+    <div className="sanctuary-backdrop">
+      <img src="/images/atrium-banner.png" alt="LifeWise Calming Atrium Sanctuary" loading="lazy" />
+      <div className="sanctuary-gradient" />
+    </div>
+    <div className="sanctuary-content">
+      <p className="eyebrow">A SANCTUARY FOR INTENTIONAL HEALING</p>
+      <h2>A space designed for<br /><em>calm and clarity.</em></h2>
+      <p>Whether connecting from the privacy of your home across Texas or stepping through our doors in North Fort Worth, our care is anchored in warmth, dignity, and real understanding.</p>
+      <div className="sanctuary-pills">
+        <span>✳ Virtual Across Texas</span>
+        <span>✳ In-Person North Fort Worth</span>
+        <span>✳ Evidence-Based &amp; Affirming</span>
+      </div>
+      <a className="sanctuary-cta" href={consultation}>Experience thoughtful counseling <b>↗</b></a>
+    </div>
+  </section>
+
+  <section className="reflections-section" id="reflections">
+    <div className="section-head">
+      <div>
+        <p className="eyebrow">BETWEEN SESSIONS • REFLECTIONS &amp; INSIGHTS</p>
+        <h2>Perspectives from<br /><em>our counselors.</em></h2>
+      </div>
+      <p>Thoughtful writings on identity, mental health, emotional boundaries, and the human side of healing.</p>
+    </div>
+    <div className="reflections-grid">
+      {reflections.map((ref) => (
+        <article className="reflection-card" key={ref.title}>
+          <div className="reflection-media">
+            <img src={ref.image} alt={ref.title} loading="lazy" />
+            <span className="reflection-pill">{ref.category}</span>
+          </div>
+          <div className="reflection-body">
+            <time>{ref.date}</time>
+            <h3>{ref.title}</h3>
+            <p>{ref.desc}</p>
+            <a className="reflection-link" href={ref.href}>Read reflection <span>↗</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
   <section className="coverage" id="coverage"><div><p className="eyebrow">MAKING CARE MORE ACCESSIBLE</p><h2>Let&apos;s start with<br /><em>what works.</em></h2><p>See accepted insurance plans and self-pay information, then reach out if you would like help checking your benefits.</p><a className="under-link" href="https://lifewisetx.com/pricing/">Insurance &amp; pricing <span>↗</span></a></div><div className="coverage-card"><small>INSURANCE &amp; PAYMENT</small><h3>A clearer path to care.</h3><ul><li>Accepted insurance plans</li><li>Benefits and coverage information</li><li>Self-pay rates and Good Faith Estimate details</li><li>Questions about your plan? Ask us before scheduling</li></ul></div></section>
   <section className="faq" id="faq"><div className="faq-heading"><p className="eyebrow">A FEW THINGS YOU MAY BE WONDERING</p><h2>Good questions.<br /><em>Clear answers.</em></h2><a className="under-link" href="https://lifewisetx.com/frequently-asked-questions/">More frequently asked questions <span>↗</span></a></div><div className="faq-list">
     <details><summary>Do you offer virtual counseling throughout Texas?</summary><p>Yes. LifeWise offers virtual counseling across Texas.</p></details>
