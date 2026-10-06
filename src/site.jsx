@@ -1,6 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import React, { useEffect, useRef, useState } from 'react';
 
 const consultation = 'https://lifewisetx.com/consultation/';
 const team = [
@@ -77,187 +75,28 @@ const reflections = [
   },
 ];
 
-function ModelStage({ onReady }) {
-  const canvasRef = useRef(null);
-  const [status, setStatus] = useState('loading');
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 3000);
-    camera.position.z = 390;
-    const hemi = new THREE.HemisphereLight(0xf7f6ee, 0x315e53, 2.25);
-    scene.add(hemi);
-    const key = new THREE.DirectionalLight(0xffedce, 3.2);
-    key.position.set(-110, 160, 220);
-    scene.add(key);
-    const fill = new THREE.DirectionalLight(0xc9e1dc, 2.1);
-    fill.position.set(140, -80, 120);
-    scene.add(fill);
-    const modelMaterials = [];
-    let currentDarkTheme = document.documentElement.dataset.theme === 'dark';
-    const applyModelTheme = (dark) => {
-      currentDarkTheme = dark;
-      modelMaterials.forEach((material) => material.color.set(dark ? 0xffffff : 0x253f4d));
-      hemi.color.set(dark ? 0xffffff : 0xf7f6ee);
-      hemi.groundColor.set(dark ? 0x18212a : 0x315e53);
-      hemi.intensity = dark ? 1.35 : 2.25;
-      key.color.set(dark ? 0xffffff : 0xffedce);
-      key.intensity = dark ? 1.9 : 3.2;
-      fill.color.set(dark ? 0xc8d6e2 : 0xc9e1dc);
-      fill.intensity = dark ? 0.8 : 2.1;
-    };
-    const onThemeChange = (event) => applyModelTheme(Boolean(event.detail?.dark));
-    window.addEventListener('lifewise-theme-change', onThemeChange);
-    applyModelTheme(document.documentElement.dataset.theme === 'dark');
-    const raycaster = new THREE.Raycaster();
-    const pointer = new THREE.Vector2();
-    const pulseOrigin = { value: new THREE.Vector3() };
-    const pulseStart = { value: -10 };
-    const pulseNow = { value: 0 };
-    const latestHitPoint = new THREE.Vector3();
-    let hoveringModel = false;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let previousFrameTime = 0;
-    let motionTime = 0;
-
-    let model;
-    let frame;
-    let disposed = false;
-    const loader = new OBJLoader();
-    loader.load('/models/female_bust.obj', (object) => {
-      if (disposed) return;
-      const bounds = new THREE.Box3().setFromObject(object);
-      const dimensions = bounds.getSize(new THREE.Vector3());
-      const center = bounds.getCenter(new THREE.Vector3());
-      // Keep the whole bust visible within the viewport, without a surrounding card.
-      const scale = 300 / Math.max(dimensions.x, dimensions.y, dimensions.z);
-      object.position.sub(center.multiplyScalar(scale));
-      object.scale.setScalar(scale);
-      object.traverse((part) => {
-        if (!part.isMesh) return;
-        const material = new THREE.MeshStandardMaterial({ color: currentDarkTheme ? 0xffffff : 0x253f4d, roughness: 0.7, metalness: 0.04, side: THREE.DoubleSide });
-        modelMaterials.push(material);
-        material.onBeforeCompile = (shader) => {
-          shader.uniforms.uPulseOrigin = pulseOrigin;
-          shader.uniforms.uPulseStart = pulseStart;
-          shader.uniforms.uPulseNow = pulseNow;
-          shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vPulseWorldPosition;');
-          shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvPulseWorldPosition = (modelMatrix * vec4(transformed, 1.0)).xyz;');
-          shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vPulseWorldPosition;\nuniform vec3 uPulseOrigin;\nuniform float uPulseStart;\nuniform float uPulseNow;');
-          shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
-            float pulseAge = uPulseNow - uPulseStart;
-            float pulseRadius = pulseAge * 220.0;
-            float pulseBand = 1.0 - smoothstep(0.0, 13.0, abs(length(vPulseWorldPosition - uPulseOrigin) - pulseRadius));
-            float pulseFade = 1.0 - smoothstep(1.0, 1.75, pulseAge);
-            outgoingLight += vec3(0.28, 0.92, 0.48) * pulseBand * pulseFade * 2.2;
-            #include <opaque_fragment>`);
-        };
-        part.material = material;
-        part.geometry.computeVertexNormals();
-      });
-      model = object;
-      scene.add(model);
-      model.updateMatrixWorld(true);
-      setStatus('ready');
-      requestAnimationFrame(() => requestAnimationFrame(onReady));
-    }, undefined, (error) => {
-      console.error('The 3D model could not be loaded.', error);
-      setStatus('error');
-      onReady();
-    });
-
-    const resize = () => {
-      const { width, height } = canvas.getBoundingClientRect();
-      if (!width || !height) return;
-      renderer.setSize(width, height, false);
-      camera.aspect = width / height;
-      camera.position.z = window.innerWidth < 700 ? 430 : 390;
-      camera.updateProjectionMatrix();
-    };
-    const onPointerMove = (event) => {
-      if (!model) return;
-      const rect = canvas.getBoundingClientRect();
-      pointer.set(((event.clientX - rect.left) / rect.width) * 2 - 1, -((event.clientY - rect.top) / rect.height) * 2 + 1);
-      raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObject(model, true)[0];
-      if (hit) latestHitPoint.copy(hit.point);
-      if (hit && !hoveringModel) {
-        pulseOrigin.value.copy(latestHitPoint);
-        pulseStart.value = performance.now() / 1000;
-      }
-      hoveringModel = Boolean(hit);
-    };
-    const onPointerLeave = () => { hoveringModel = false; };
-    // Keep the same canvas in view through the intro, then fade it before the service cards.
-    const tick = () => {
-      const frameTime = performance.now() / 1000;
-      const delta = previousFrameTime ? Math.min(frameTime - previousFrameTime, 0.05) : 0;
-      previousFrameTime = frameTime;
-      if (!prefersReducedMotion) motionTime += delta;
-      const scrollProgress = window.scrollY / Math.max(window.innerHeight, 1);
-      const progress = THREE.MathUtils.clamp(scrollProgress, 0, 1);
-      pulseNow.value = frameTime;
-      if (model) {
-        // A restrained idle sway gives the bust life without making it spin in place.
-        // Its breathing drift fades out as the scroll-led transition takes over.
-        const idleWeight = prefersReducedMotion ? 0 : 1 - THREE.MathUtils.smoothstep(progress, 0.04, 0.34);
-        const slowBreath = Math.sin(motionTime * 0.72);
-        const quietSway = Math.sin(motionTime * 0.43 + 0.8);
-        model.position.x = THREE.MathUtils.lerp(0, -135, progress);
-        model.position.y = THREE.MathUtils.lerp(-105, -65, progress) + slowBreath * 2.4 * idleWeight;
-        const baseScale = THREE.MathUtils.lerp(1, 0.82, progress);
-        model.scale.setScalar(baseScale * (1 + slowBreath * 0.004 * idleWeight));
-        model.rotation.y = progress * 1.15 + quietSway * 0.045 * idleWeight;
-        model.rotation.x = slowBreath * 0.012 * idleWeight;
-        model.rotation.z = progress * -0.05 + quietSway * 0.008 * idleWeight;
-      }
-      if (hoveringModel && pulseNow.value - pulseStart.value >= 1.75) {
-        pulseOrigin.value.copy(latestHitPoint);
-        pulseStart.value = pulseNow.value;
-      }
-      canvas.parentElement.style.opacity = String(THREE.MathUtils.clamp((2.05 - scrollProgress) / 0.18, 0, 1));
-      renderer.render(scene, camera);
-      frame = requestAnimationFrame(tick);
-    };
-    resize();
-    window.addEventListener('resize', resize);
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('blur', onPointerLeave);
-    tick();
-    return () => {
-      disposed = true;
-      cancelAnimationFrame(frame);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('blur', onPointerLeave);
-      window.removeEventListener('lifewise-theme-change', onThemeChange);
-      if (model) model.traverse((part) => { if (part.isMesh) { part.geometry.dispose(); part.material.dispose(); } });
-      renderer.dispose();
-    };
-  }, []);
-
-  return <div className={`model-stage ${status}`} aria-label="Three dimensional model artwork">
-    <canvas ref={canvasRef} />
-    {status !== 'ready' && <div className="model-fallback">{status === 'loading' ? 'PREPARING THE ARTWORK' : 'A SPACE TO PAUSE AND BEGIN'}</div>}
-  </div>;
-}
-
 function App() {
+  const heroVideoRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     try { return window.localStorage.getItem('lifewise-theme') === 'dark'; }
     catch { return false; }
   });
-  const [siteLoading, setSiteLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showConcierge, setShowConcierge] = useState(false);
   const [dismissConcierge, setDismissConcierge] = useState(false);
 
-  const finishLoading = useCallback(() => setSiteLoading(false), []);
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePlayback = () => {
+      if (motionPreference.matches) video.pause();
+      else video.play().catch(() => { /* Keep the hero usable if autoplay is blocked. */ });
+    };
+    updatePlayback();
+    motionPreference.addEventListener('change', updatePlayback);
+    return () => motionPreference.removeEventListener('change', updatePlayback);
+  }, [darkMode]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -284,14 +123,13 @@ function App() {
   useEffect(() => {
     document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
     try { window.localStorage.setItem('lifewise-theme', darkMode ? 'dark' : 'light'); } catch { /* Storage may be disabled. */ }
-    window.dispatchEvent(new CustomEvent('lifewise-theme-change', { detail: { dark: darkMode } }));
   }, [darkMode]);
 
   const toggleTheme = (event) => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const nextDarkMode = !darkMode;
 
-    // Apply theme immediately (updates DOM + storage + 3-D model colours).
+    // Apply the selected theme.
     const applyTheme = () => {
       setDarkMode(nextDarkMode);
     };
@@ -325,13 +163,6 @@ function App() {
       document.documentElement.style.removeProperty('--vt-r');
     });
   };
-
-  useEffect(() => {
-    if (!siteLoading) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = previousOverflow; };
-  }, [siteLoading]);
 
   useEffect(() => {
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -384,15 +215,13 @@ function App() {
       </div>
     </header>
 
-    <ModelStage onReady={finishLoading} />
-    <div className={`loader-screen${siteLoading ? ' is-loading' : ' is-loaded'}`} aria-hidden={!siteLoading}>
-      <div className="loader-center"><div className="loader-orbit"><i /></div><p>MAKING A LITTLE SPACE TO BEGIN</p></div>
-      <div className="loader-bottom"><span>COUNSELING ACROSS TEXAS</span><span className="loader-line"><i /></span><span>LOADING YOUR EXPERIENCE</span></div>
-    </div>
-
     <main id="home">
       <section className="hero">
-        <div className="hero-arc" aria-hidden="true" />
+        <div className="hero-arc" aria-hidden="true">
+          <video key={darkMode ? 'dark' : 'light'} ref={heroVideoRef} className="hero-background-video" autoPlay muted loop playsInline preload="metadata" tabIndex={-1}>
+            <source src={darkMode ? '/darkTheme.mp4' : '/lightTheme.mp4'} type="video/mp4" />
+          </video>
+        </div>
         <div className="hero-atmosphere" aria-hidden="true" />
         <div className="hero-prestige-badge"><span>✦</span> PRIVATE COUNSELING &amp; CONCIERGE WELLNESS <span>✦</span></div>
         <div className="hero-meta">ADULTS, COUPLES &amp; FAMILIES <i /> TEXAS</div>

@@ -1,20 +1,19 @@
 {
-    "name":  "lifewise-homepage",
-    "private":  true,
-    "version":  "1.0.0",
-    "type":  "module",
-    "scripts":  {
-                    "dev":  "vite",
-                    "build":  "vite build",
-                    "preview":  "vite preview"
-                },
-    "dependencies":  {
-                         "three":  "^0.180.0",
-                         "react":  "latest",
-                         "react-dom":  "latest"
-                     },
-    "devDependencies":  {
-                            "@vitejs/plugin-react":  "4.7.0",
-                            "vite":  "6.4.1"
-                        }
+    "name": "lifewise-homepage",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "react": "latest",
+        "react-dom": "latest"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "4.7.0",
+        "vite": "6.4.1"
+    }
 }
