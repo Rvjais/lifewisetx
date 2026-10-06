@@ -225,23 +225,27 @@ function App() {
         <div className="hero-atmosphere" aria-hidden="true" />
         <div className="hero-prestige-badge"><span>✦</span> PRIVATE COUNSELING &amp; CONCIERGE WELLNESS <span>✦</span></div>
         <div className="hero-meta">ADULTS, COUPLES &amp; FAMILIES <i /> TEXAS</div>
-        <h1 className="hero-title title-one">Come<br />as you are.</h1>
+        <div className="hero-primary">
+          <h1 className="hero-title title-one">Come<br />as you are.</h1>
+          <div className="hero-details">
+            <div className="hero-trust-bar">
+              <span><i className="gold-star">✦</i> HIPAA Compliant &amp; Confidential</span>
+              <span><i className="gold-star">✦</i> Licensed Texas Clinicians</span>
+              <span><i className="gold-star">✦</i> In-Person Fort Worth &amp; Telehealth</span>
+            </div>
+            <div className="hero-locations">
+              <div><span>CARE FORMAT</span><b>VIRTUAL ACROSS TEXAS</b></div>
+              <div><span>IN PERSON</span><b>NORTH FORT WORTH</b></div>
+            </div>
+            <a className="hero-cta" href={consultation}>
+              <span className="cta-sparkle">✦</span>
+              <span className="cta-text">START WITH A 15-MINUTE CONVERSATION</span>
+              <span className="cta-arrow-circle">↗</span>
+            </a>
+          </div>
+        </div>
         <div className="hero-title title-two">We&apos;ll meet<br /><em>you there.</em></div>
         <aside className="hero-aside"><span>✳</span><p>Support for anxiety, trauma, neurodivergence, relationships, and life&apos;s harder seasons.</p></aside>
-        <div className="hero-locations">
-          <div><span>CARE FORMAT</span><b>VIRTUAL ACROSS TEXAS</b></div>
-          <div><span>IN PERSON</span><b>NORTH FORT WORTH</b></div>
-        </div>
-        <div className="hero-trust-bar">
-          <span><i className="gold-star">✦</i> HIPAA Compliant &amp; Confidential</span>
-          <span><i className="gold-star">✦</i> Licensed Texas Clinicians</span>
-          <span><i className="gold-star">✦</i> In-Person Fort Worth &amp; Telehealth</span>
-        </div>
-        <a className="hero-cta" href={consultation}>
-          <span className="cta-sparkle">✦</span>
-          <span className="cta-text">START WITH A 15-MINUTE CONVERSATION</span>
-          <span className="cta-arrow-circle">↗</span>
-        </a>
         <div className="scroll-hint"><i /> SCROLL TO EXPLORE</div>
       </section>
 
