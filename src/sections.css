@@ -1,0 +1,66 @@
+/* Botanical ornaments sit on section boundaries without adding empty bands. */
+.section-divider {
+  --divider-surface: #faf8f0;
+  --divider-leaf: #537457;
+  --divider-gold: #b99a52;
+  position: absolute;
+  top: 0;
+  left: var(--section-gutter);
+  right: var(--section-gutter);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  height: 44px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.section-divider::before, .section-divider::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, rgba(185, 154, 82, .48));
+}
+.section-divider::after { background: linear-gradient(90deg, rgba(185, 154, 82, .48), transparent); }
+.referrals > .section-divider { max-width: none; }
+.section-divider-ornament {
+  display: grid;
+  place-items: center;
+  flex: 0 0 84px;
+  height: 44px;
+  border: 1px solid rgba(185, 154, 82, .28);
+  border-radius: 50%;
+  background: var(--divider-surface);
+  box-shadow: 0 2px 8px rgba(37, 77, 59, .025);
+}
+.section-divider svg { display: block; width: 64px; height: 32px; }
+.divider-stem { stroke: var(--divider-gold); stroke-width: .9; stroke-linecap: round; }
+.divider-leaf { fill: var(--divider-leaf); fill-opacity: .18; stroke: var(--divider-leaf); stroke-width: .7; stroke-linejoin: round; }
+.divider-seed { fill: var(--divider-gold); }
+.section-divider--dark {
+  --divider-surface: #31553e;
+  --divider-leaf: #eddcb0;
+  --divider-gold: #cfb16d;
+}
+.section-divider--dark .section-divider-ornament { border-color: rgba(237, 220, 176, .35); }
+.sanctuary-banner > .section-divider {
+  top: 28px;
+  left: 32px;
+  right: 32px;
+  height: 32px;
+  transform: none;
+}
+.sanctuary-banner > .section-divider .section-divider-ornament {
+  height: 32px;
+  flex-basis: 72px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+@media (max-width: 760px) {
+  .section-divider { height: 36px; gap: 12px; }
+  .section-divider-ornament { height: 36px; flex-basis: 70px; }
+  .section-divider svg { width: 54px; height: 28px; }
+  .sanctuary-banner > .section-divider { top: 8px; left: 24px; right: 24px; }
+}

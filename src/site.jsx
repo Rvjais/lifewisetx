@@ -75,16 +75,42 @@ const reflections = [
   },
 ];
 
+function SectionDivider({ tone = 'light' }) {
+  return (
+    <div className={`section-divider section-divider--${tone}`} aria-hidden="true">
+      <span className="section-divider-ornament">
+        <svg viewBox="0 0 72 36" fill="none" focusable="false">
+          <path className="divider-stem" d="M36 28C26 27 16 20 9 10M36 28C46 27 56 20 63 10" />
+          <path className="divider-leaf" d="M16 18C9 18 7 13 8 8C14 9 17 12 16 18ZM23 23C17 26 12 24 10 20C15 17 20 19 23 23ZM24 23C21 18 23 13 27 11C30 16 29 20 24 23ZM56 18C63 18 65 13 64 8C58 9 55 12 56 18ZM49 23C55 26 60 24 62 20C57 17 52 19 49 23ZM48 23C51 18 49 13 45 11C42 16 43 20 48 23Z" />
+          <path className="divider-seed" d="M36 17L39 21L36 25L33 21Z" />
+        </svg>
+      </span>
+    </div>
+  );
+}
+
 function App() {
   const heroVideoRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => {
-    try { return window.localStorage.getItem('lifewise-theme') === 'dark'; }
-    catch { return false; }
-  });
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showConcierge, setShowConcierge] = useState(false);
   const [dismissConcierge, setDismissConcierge] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    const closeOutsideHeader = (event) => {
+      if (!event.target.closest('.site-header')) setMenuOpen(false);
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    document.addEventListener('pointerdown', closeOutsideHeader);
+    return () => {
+      document.removeEventListener('keydown', closeOnEscape);
+      document.removeEventListener('pointerdown', closeOutsideHeader);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const video = heroVideoRef.current;
@@ -96,7 +122,7 @@ function App() {
     updatePlayback();
     motionPreference.addEventListener('change', updatePlayback);
     return () => motionPreference.removeEventListener('change', updatePlayback);
-  }, [darkMode]);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -112,77 +138,23 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const onPointerMove = (e) => {
-      document.documentElement.style.setProperty('--cursor-x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--cursor-y', `${e.clientY}px`);
-    };
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    return () => window.removeEventListener('pointermove', onPointerMove);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
-    try { window.localStorage.setItem('lifewise-theme', darkMode ? 'dark' : 'light'); } catch { /* Storage may be disabled. */ }
-  }, [darkMode]);
-
-  const toggleTheme = (event) => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const nextDarkMode = !darkMode;
-
-    // Apply the selected theme.
-    const applyTheme = () => {
-      setDarkMode(nextDarkMode);
-    };
-
-    // No View Transitions support or reduced-motion: switch instantly.
-    if (prefersReduced || !document.startViewTransition) {
-      applyTheme();
-      return;
-    }
-
-    // Compute the clip-path origin from the toggle button centre.
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = Math.round(rect.left + rect.width / 2);
-    const y = Math.round(rect.top + rect.height / 2);
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y),
-    );
-
-    // Expose the origin to CSS via custom properties on <html>.
-    document.documentElement.style.setProperty('--vt-x', `${x}px`);
-    document.documentElement.style.setProperty('--vt-y', `${y}px`);
-    document.documentElement.style.setProperty('--vt-r', `${endRadius}px`);
-
-    const transition = document.startViewTransition(applyTheme);
-
-    // Clean up custom properties once the transition is fully done.
-    transition.finished.then(() => {
-      document.documentElement.style.removeProperty('--vt-x');
-      document.documentElement.style.removeProperty('--vt-y');
-      document.documentElement.style.removeProperty('--vt-r');
-    });
-  };
-
-  useEffect(() => {
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const targets = document.querySelectorAll('.intro-tag, .intro > div:last-child, .area-card, .coverage > div, .closing .eyebrow, .closing h2, .closing > p:not(.eyebrow), .closing > a, .team-person, .faq-list details, .recognition, .referrals > div, .referrals > a, .crisis > div, .crisis > a, .coverage-card, .section-head, .team-heading, .population-row, .faq-heading, .intro-media-card, .sanctuary-banner, .reflection-card, .philosophy-section, .sanctuary-feature-card, .hero-trust-bar, .hero-prestige-badge');
+    const targets = document.querySelectorAll('.intro-visual, .intro > div:last-child, .area-card, .coverage > div:not(.section-divider), .closing .eyebrow, .closing h2, .closing > p:not(.eyebrow), .closing > a, .team-person, .faq-list details, .recognition, .referrals > div:not(.section-divider), .referrals > a, .crisis > div, .crisis > a, .coverage-card, .section-head, .team-heading, .population-row, .faq-heading, .sanctuary-banner, .reflection-card, .philosophy-section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('is-visible');
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -4% 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
     targets.forEach((target, index) => {
       target.classList.add('scroll-reveal');
-      target.style.setProperty('--reveal-delay', `${(index % 6) * 80}ms`);
+      target.style.setProperty('--reveal-delay', `${(index % 3) * 45}ms`);
       observer.observe(target);
     });
     return () => observer.disconnect();
   }, []);
   return <>
-    <div className="luxury-spotlight" aria-hidden="true" />
     <div className="reading-progress-track" aria-hidden="true">
       <div className="reading-progress-bar" style={{ transform: `scaleX(${scrollProgress})` }} />
     </div>
@@ -196,61 +168,48 @@ function App() {
       </div>
     </div>
 
-    <header className="site-header">
+    <header className={scrollProgress > 0 ? 'site-header is-scrolled' : 'site-header'}>
       <a className="brand" href="#home" aria-label="LifeWise home"><img src="/images/lifewise-logo.png" alt="LifeWise Counseling and Wellness" /></a>
-      <nav className={menuOpen ? 'nav-links open' : 'nav-links'}>
+      <nav id="main-navigation" aria-label="Main navigation" className={menuOpen ? 'nav-links open' : 'nav-links'}>
         <a href="#support" onClick={() => setMenuOpen(false)}>Services</a>
         <a href="#team" onClick={() => setMenuOpen(false)}>Our team</a>
         <a href="#approach" onClick={() => setMenuOpen(false)}>Our approach</a>
         <a href="#sanctuary" onClick={() => setMenuOpen(false)}>Sanctuary</a>
         <a href="#reflections" onClick={() => setMenuOpen(false)}>Reflections</a>
         <a href="#coverage" onClick={() => setMenuOpen(false)}>Insurance &amp; pricing</a>
-        <a className="nav-button" href={consultation}>Book a consultation <b>↗</b></a>
+        <a className="nav-button" href={consultation} onClick={() => setMenuOpen(false)}>Book a consultation <b aria-hidden="true">↗</b></a>
       </nav>
       <div className="header-actions">
-        <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>
-          {darkMode ? <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg> : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 14.2A8.4 8.4 0 0 1 9.8 3.2 8.8 8.8 0 1 0 20.8 14.2Z"/></svg>}
-        </button>
-        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}><span /><span /></button>
+        <button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-controls="main-navigation" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}><span /><span /></button>
       </div>
     </header>
 
     <main id="home">
       <section className="hero">
-        <div className="hero-arc" aria-hidden="true">
-          <video key={darkMode ? 'dark' : 'light'} ref={heroVideoRef} className="hero-background-video" autoPlay muted loop playsInline preload="metadata" tabIndex={-1}>
-            <source src={darkMode ? '/darkTheme.mp4' : '/lightTheme.mp4'} type="video/mp4" />
+        <div className="hero-backdrop" aria-hidden="true">
+          <video ref={heroVideoRef} className="hero-background-video" autoPlay muted loop playsInline preload="metadata" tabIndex={-1}>
+            <source src="/lightTheme.mp4" type="video/mp4" />
           </video>
         </div>
-        <div className="hero-atmosphere" aria-hidden="true" />
-        <div className="hero-prestige-badge"><span>✦</span> PRIVATE COUNSELING &amp; CONCIERGE WELLNESS <span>✦</span></div>
-        <div className="hero-meta">ADULTS, COUPLES &amp; FAMILIES <i /> TEXAS</div>
-        <div className="hero-primary">
-          <h1 className="hero-title title-one">Come<br />as you are.</h1>
-          <div className="hero-details">
-            <div className="hero-trust-bar">
-              <span><i className="gold-star">✦</i> HIPAA Compliant &amp; Confidential</span>
-              <span><i className="gold-star">✦</i> Licensed Texas Clinicians</span>
-              <span><i className="gold-star">✦</i> In-Person Fort Worth &amp; Telehealth</span>
-            </div>
-            <div className="hero-locations">
-              <div><span>CARE FORMAT</span><b>VIRTUAL ACROSS TEXAS</b></div>
-              <div><span>IN PERSON</span><b>NORTH FORT WORTH</b></div>
-            </div>
-            <a className="hero-cta" href={consultation}>
-              <span className="cta-sparkle">✦</span>
-              <span className="cta-text">START WITH A 15-MINUTE CONVERSATION</span>
-              <span className="cta-arrow-circle">↗</span>
-            </a>
-          </div>
+        <div className="hero-shade" aria-hidden="true" />
+        <div className="hero-content">
+          <p className="hero-eyebrow">COUNSELING &amp; WELLNESS IN TEXAS</p>
+          <h1 className="hero-heading"><span className="hero-opening">Come</span>{' '}<em>as you are.</em></h1>
+          <p className="hero-description">We&apos;ll meet you where you are.<span>And find a way forward, together.</span></p>
+          <p className="hero-care-format">In person in North Fort Worth. Online across Texas.</p>
+          <a className="hero-action" href={consultation}>Start a conversation <span aria-hidden="true">↗</span></a>
+          <p className="hero-consultation-note">A complimentary 15-minute consultation.</p>
         </div>
-        <div className="hero-title title-two">We&apos;ll meet<br /><em>you there.</em></div>
-        <aside className="hero-aside"><span>✳</span><p>Support for anxiety, trauma, neurodivergence, relationships, and life&apos;s harder seasons.</p></aside>
-        <div className="scroll-hint"><i /> SCROLL TO EXPLORE</div>
       </section>
 
       <section className="intro" id="approach">
-        <div className="intro-tag"><span className="outline-num">01</span> A PLACE TO START, AS YOU ARE</div>
+        <SectionDivider />
+        <div className="intro-visual">
+          <div className="intro-tag"><span className="outline-num">01</span> A PLACE TO START, AS YOU ARE</div>
+          <figure className="intro-nature-frame">
+            <img src="/images/woodland-path.png" alt="A quiet woodland path surrounded by green ferns and soft golden sunlight" width="1024" height="1536" loading="lazy" decoding="async" />
+          </figure>
+        </div>
         <div>
           <p className="eyebrow">YOU DON&apos;T NEED THE PERFECT WORDS</p>
           <h2>We&apos;ll listen, and find a way forward <em>together.</em></h2>
@@ -297,10 +256,11 @@ function App() {
       </section>
 
       <section className="support" id="support">
+        <SectionDivider />
         <div className="section-head">
           <div>
             <p className="eyebrow">COUNSELING THAT MEETS YOU WHERE YOU ARE</p>
-            <h2>Support for the life<br />you&apos;re living.</h2>
+            <h2>Support for the life{' '}you&apos;re living.</h2>
           </div>
           <p>Practical, affirming counseling for the things you&apos;re carrying and the people you care about.</p>
         </div>
@@ -339,10 +299,11 @@ function App() {
       </section>
 
       <section className="team-section" id="team">
+        <SectionDivider />
         <div className="team-heading">
           <div>
             <p className="eyebrow">THE PEOPLE BEHIND YOUR CARE</p>
-            <h2>A team with room<br />for <em>your story.</em></h2>
+            <h2>A team with room{' '}for <em>your story.</em></h2>
           </div>
           <div>
             <p>Our team brings different personalities, backgrounds, strengths, and approaches to the work. We can help you find a provider who feels right for you.</p>
@@ -369,13 +330,14 @@ function App() {
       
       {/* ── Elevated Sanctuary Experience ── */}
       <section className="sanctuary-banner" id="sanctuary">
+        <SectionDivider tone="dark" />
         <div className="sanctuary-backdrop">
           <img src="/images/atrium-banner.png" alt="LifeWise Calming Atrium Sanctuary" loading="lazy" />
           <div className="sanctuary-gradient" />
         </div>
         <div className="sanctuary-content">
           <div className="sanctuary-prestige-tag"><span>✦</span> THE SANCTUARY EXPERIENCE</div>
-          <h2>A space designed for<br /><em>calm, dignity &amp; clarity.</em></h2>
+          <h2>A space designed for{' '}<em>calm, dignity &amp; clarity.</em></h2>
           <p>Whether connecting from the privacy of your home across Texas or stepping through our doors in North Fort Worth, our care is anchored in unhurried presence, warmth, and real understanding.</p>
           
           <div className="sanctuary-features-grid">
@@ -405,10 +367,11 @@ function App() {
 
       {/* ── The LifeWise Journal / Reflections ── */}
       <section className="reflections-section" id="reflections">
+        <SectionDivider />
         <div className="section-head">
           <div>
             <p className="eyebrow">THE LIFEWISE JOURNAL &bull; BETWEEN SESSIONS</p>
-            <h2>Perspectives from<br /><em>our counselors.</em></h2>
+            <h2>Perspectives from{' '}<em>our counselors.</em></h2>
           </div>
           <p>Thoughtful writings on identity, mental health, emotional boundaries, and the human side of healing.</p>
         </div>
@@ -439,7 +402,7 @@ function App() {
       <section className="coverage" id="coverage">
         <div>
           <p className="eyebrow">MAKING CARE MORE ACCESSIBLE</p>
-          <h2>Let&apos;s start with<br /><em>what works.</em></h2>
+          <h2>Let&apos;s start with{' '}<em>what works.</em></h2>
           <p>See accepted insurance plans and self-pay information, then reach out if you would like help checking your benefits.</p>
           <a className="under-link" href="https://lifewisetx.com/pricing/">Insurance &amp; pricing <span>↗</span></a>
         </div>
@@ -453,12 +416,14 @@ function App() {
             <li>Questions about your plan? Ask us before scheduling</li>
           </ul>
         </div>
+        <SectionDivider />
       </section>
 
       <section className="faq" id="faq">
+        <SectionDivider />
         <div className="faq-heading">
           <p className="eyebrow">A FEW THINGS YOU MAY BE WONDERING</p>
-          <h2>Good questions.<br /><em>Clear answers.</em></h2>
+          <h2>Good questions.{' '}<em>Clear answers.</em></h2>
           <a className="under-link" href="https://lifewisetx.com/frequently-asked-questions/">More frequently asked questions <span>↗</span></a>
         </div>
         <div className="faq-list">
@@ -471,6 +436,7 @@ function App() {
       </section>
 
       <section className="referrals">
+        <SectionDivider />
         <div>
           <p className="eyebrow">FOR PROFESSIONALS &amp; FUTURE COUNSELORS</p>
           <h2>Let&apos;s make a thoughtful connection.</h2>
@@ -489,6 +455,7 @@ function App() {
       </section>
 
       <section className="closing">
+        <SectionDivider tone="dark" />
         <p className="eyebrow">WHENEVER YOU&apos;RE READY</p>
         <h2>A small first conversation can help you see what comes next.</h2>
         <p>No pressure to have everything figured out.</p>

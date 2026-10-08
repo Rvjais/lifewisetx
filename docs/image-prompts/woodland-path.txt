@@ -1,0 +1,4 @@
+Tool: Built-in image_gen image generation
+Asset: public/images/woodland-path.png
+
+Use case: photorealistic-natural. Asset type: portrait editorial nature photograph for the left column of a calm counseling website, accompanying the words We'll listen, and find a way forward together. Create one refined photorealistic vertical 2:3 image: a gently winding walking path through a tranquil leafy woodland, soft moss and ferns in the foreground, slender trees, warm golden morning sunlight filtering through sage and forest green foliage. Ground-level eye-level perspective, inviting open path leading gently toward the light, serene and hopeful, natural muted colors, subtle atmospheric depth, crisp organic textures, tasteful fine-art photography, no exaggerated sunbeams, no oversaturation, no people, no buildings, no text, no logo, no frame or watermark. The image itself fills the canvas.
