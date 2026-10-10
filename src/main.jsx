@@ -6,6 +6,8 @@ import './theme.css';
 import './refinements.css';
 import './navigation.css';
 import './sections.css';
+import './pages.css';
+import './service-pages.css';
 
 document.documentElement.dataset.theme = 'light';
 createRoot(document.getElementById('root')).render(<App />);

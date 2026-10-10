@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
+import InteriorPage, { usePageNavigation, services } from './pages.jsx';
+import SiteHeader from './navigation.jsx';
 
-const consultation = 'https://lifewisetx.com/consultation/';
+const consultation = '/consultation/';
 const team = [
-  { name: 'Stacy Hixon', role: 'Clinical Director', image: '/images/team-stacy.png', href: 'https://lifewisetx.com/stacy/' },
-  { name: 'Martha Sharpe', role: 'LPC Associate', image: '/images/team-martha.png', href: 'https://lifewisetx.com/martha-sharpe/' },
-  { name: 'Caity Boyd', role: 'Graduate Counseling Intern', image: '/images/team-caity.png', href: 'https://lifewisetx.com/caity-boyd/' },
-  { name: 'Hazel Dettmer', role: 'Group Facilitator', image: '/images/team-hazel.png', href: 'https://lifewisetx.com/hazel-dettmer/' },
+  { name: 'Stacy Hixon', role: 'Clinical Director', image: '/images/team-stacy.png', href: '/stacy/' },
+  { name: 'Martha Sharpe', role: 'LPC Associate', image: '/images/team-martha.png', href: '/martha-sharpe/' },
+  { name: 'Caity Boyd', role: 'Graduate Counseling Intern', image: '/images/team-caity.png', href: '/caity-boyd/' },
+  { name: 'Hazel Dettmer', role: 'Group Facilitator', image: '/images/team-hazel.png', href: '/hazel-dettmer/' },
 ];
 const areas = [
   {
     num: '01',
+    href: '/anxiety-and-depression/',
     title: 'Individual Counseling & Anxiety',
     desc: 'Support for anxiety, panic, depression, burnout, chronic stress, and navigating high-pressure life transitions.',
     image: '/images/service-anxiety.png',
@@ -18,6 +21,7 @@ const areas = [
   },
   {
     num: '02',
+    href: '/neurodivergence/',
     title: 'Neurodivergent & Affirming Care',
     desc: 'Respectful, neurodiversity-affirming counseling for ADHDers, autistic adults, late-diagnosed individuals, and LGBTQIA+ clients.',
     image: '/images/service-neurodivergence.png',
@@ -26,6 +30,7 @@ const areas = [
   },
   {
     num: '03',
+    href: '/trauma/',
     title: 'Trauma & EMDR Processing',
     desc: 'Somatic, grounded support to process deep emotional wounds, PTSD, relational trauma, and rebuild a sense of safety.',
     image: '/images/service-trauma.png',
@@ -34,6 +39,7 @@ const areas = [
   },
   {
     num: '04',
+    href: '/relationships/',
     title: 'Couples & Relationship Health',
     desc: 'Make room for clearer communication, de-escalating recurring conflict, and cultivating authentic emotional intimacy.',
     image: '/images/service-relationships.png',
@@ -51,7 +57,7 @@ const reflections = [
     category: 'COUNSELOR WELLNESS',
     desc: 'The importance of secondary trauma awareness, emotional sustainability, and walking the walk as helping professionals.',
     image: '/images/reflection-counseling.jpeg',
-    href: 'https://lifewisetx.com/reflections/',
+    href: '/2026/10/01/why-counselors-need-therapy-too/',
   },
   {
     title: 'We Create Our Identity',
@@ -61,7 +67,7 @@ const reflections = [
     category: 'IDENTITY & BOUNDARIES',
     desc: 'Navigating family roles, establishing healthy boundaries, and shedding old narratives to build a grounded sense of self.',
     image: '/images/reflection-identity.jpeg',
-    href: 'https://lifewisetx.com/reflections/',
+    href: '/2026/09/24/we-created-our-identity/',
   },
   {
     title: 'Sitting With Discomfort & Mindfulness',
@@ -71,7 +77,7 @@ const reflections = [
     category: 'EMOTIONAL REGULATION',
     desc: 'Understanding how somatic mindfulness and nervous system soothing help us weather life’s harder emotional seasons.',
     image: '/images/reflection-mindfulness.jpeg',
-    href: 'https://lifewisetx.com/reflections/',
+    href: '/2026/09/17/wet-socks-sitting-with-discomfort/',
   },
 ];
 
@@ -90,30 +96,20 @@ function SectionDivider({ tone = 'light' }) {
 }
 
 function App() {
+  const path = usePageNavigation();
   const heroVideoRef = useRef(null);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showConcierge, setShowConcierge] = useState(false);
   const [dismissConcierge, setDismissConcierge] = useState(false);
 
   useEffect(() => {
-    if (!menuOpen) return;
-    const closeOnEscape = (event) => {
-      if (event.key === 'Escape') setMenuOpen(false);
-    };
-    const closeOutsideHeader = (event) => {
-      if (!event.target.closest('.site-header')) setMenuOpen(false);
-    };
-    document.addEventListener('keydown', closeOnEscape);
-    document.addEventListener('pointerdown', closeOutsideHeader);
-    return () => {
-      document.removeEventListener('keydown', closeOnEscape);
-      document.removeEventListener('pointerdown', closeOutsideHeader);
-    };
-  }, [menuOpen]);
+    setScrollProgress(0);
+    setShowConcierge(false);
+  }, [path]);
 
   useEffect(() => {
     const video = heroVideoRef.current;
+    if (!video) return;
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const updatePlayback = () => {
       if (motionPreference.matches) video.pause();
@@ -122,7 +118,7 @@ function App() {
     updatePlayback();
     motionPreference.addEventListener('change', updatePlayback);
     return () => motionPreference.removeEventListener('change', updatePlayback);
-  }, []);
+  }, [path]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -135,7 +131,7 @@ function App() {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [path]);
 
   useEffect(() => {
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -153,8 +149,9 @@ function App() {
       observer.observe(target);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [path]);
   return <>
+    <a className="skip-link" href={path === "/" ? "#home" : "#page-content"}>Skip to content</a>
     <div className="reading-progress-track" aria-hidden="true">
       <div className="reading-progress-bar" style={{ transform: `scaleX(${scrollProgress})` }} />
     </div>
@@ -168,23 +165,9 @@ function App() {
       </div>
     </div>
 
-    <header className={scrollProgress > 0 ? 'site-header is-scrolled' : 'site-header'}>
-      <a className="brand" href="#home" aria-label="LifeWise home"><img src="/images/lifewise-logo.png" alt="LifeWise Counseling and Wellness" /></a>
-      <nav id="main-navigation" aria-label="Main navigation" className={menuOpen ? 'nav-links open' : 'nav-links'}>
-        <a href="#support" onClick={() => setMenuOpen(false)}>Services</a>
-        <a href="#team" onClick={() => setMenuOpen(false)}>Our team</a>
-        <a href="#approach" onClick={() => setMenuOpen(false)}>Our approach</a>
-        <a href="#sanctuary" onClick={() => setMenuOpen(false)}>Sanctuary</a>
-        <a href="#reflections" onClick={() => setMenuOpen(false)}>Reflections</a>
-        <a href="#coverage" onClick={() => setMenuOpen(false)}>Insurance &amp; pricing</a>
-        <a className="nav-button" href={consultation} onClick={() => setMenuOpen(false)}>Book a consultation <b aria-hidden="true">↗</b></a>
-      </nav>
-      <div className="header-actions">
-        <button className="menu-toggle" type="button" onClick={() => setMenuOpen(!menuOpen)} aria-controls="main-navigation" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}><span /><span /></button>
-      </div>
-    </header>
+    <SiteHeader path={path} scrolled={scrollProgress > 0} services={services} />
 
-    <main id="home">
+    {path !== "/" ? <InteriorPage path={path} /> : <main id="home" tabIndex={-1}>
       <section className="hero">
         <div className="hero-backdrop" aria-hidden="true">
           <video ref={heroVideoRef} className="hero-background-video" autoPlay muted loop playsInline preload="metadata" tabIndex={-1}>
@@ -266,7 +249,7 @@ function App() {
         </div>
         <div className="area-grid">
           {areas.map((area) => (
-            <article className="area-card" key={area.num}>
+            <a className="area-card area-card-link" href={area.href} key={area.num}>
               <div className="area-card-thumb">
                 <img src={area.image} alt={area.title} loading="lazy" />
                 <span className="area-badge">{area.badge}</span>
@@ -284,7 +267,7 @@ function App() {
                   ))}
                 </div>
               </div>
-            </article>
+            </a>
           ))}
         </div>
         <div className="population-row">
@@ -295,7 +278,7 @@ function App() {
 
       <section className="recognition">
         <span className="recognition-star">✳</span>
-        <p>Grounded, human care. <a href="https://lifewisetx.com/featured-in-the-dallas-voyager/">Read our feature in Dallas Voyager <b>↗</b></a></p>
+        <p>Grounded, human care. <a href="/2026/04/09/featured-in-the-dallas-voyager/">Read our feature in Dallas Voyager <b>↗</b></a></p>
       </section>
 
       <section className="team-section" id="team">
@@ -307,7 +290,7 @@ function App() {
           </div>
           <div>
             <p>Our team brings different personalities, backgrounds, strengths, and approaches to the work. We can help you find a provider who feels right for you.</p>
-            <a className="under-link" href="https://lifewisetx.com/careteam/">Get to know the team <span>↗</span></a>
+            <a className="under-link" href="/careteam/">Get to know the team <span>↗</span></a>
           </div>
         </div>
         <div className="team-grid">
@@ -404,7 +387,7 @@ function App() {
           <p className="eyebrow">MAKING CARE MORE ACCESSIBLE</p>
           <h2>Let&apos;s start with{' '}<em>what works.</em></h2>
           <p>See accepted insurance plans and self-pay information, then reach out if you would like help checking your benefits.</p>
-          <a className="under-link" href="https://lifewisetx.com/pricing/">Insurance &amp; pricing <span>↗</span></a>
+          <a className="under-link" href="/pricing/">Insurance &amp; pricing <span>↗</span></a>
         </div>
         <div className="coverage-card">
           <small>INSURANCE &amp; PAYMENT</small>
@@ -424,7 +407,7 @@ function App() {
         <div className="faq-heading">
           <p className="eyebrow">A FEW THINGS YOU MAY BE WONDERING</p>
           <h2>Good questions.{' '}<em>Clear answers.</em></h2>
-          <a className="under-link" href="https://lifewisetx.com/frequently-asked-questions/">More frequently asked questions <span>↗</span></a>
+          <a className="under-link" href="/frequently-asked-questions/">More frequently asked questions <span>↗</span></a>
         </div>
         <div className="faq-list">
           <details><summary>Do you offer virtual counseling throughout Texas?</summary><p>Yes. LifeWise offers virtual counseling across Texas.</p></details>
@@ -461,7 +444,7 @@ function App() {
         <p>No pressure to have everything figured out.</p>
         <a href={consultation}>Choose a consultation time <span>↗</span></a>
       </section>
-    </main>
+    </main>}
 
     {/* ── Luxury Concierge Capsule Dock ── */}
     {showConcierge && !dismissConcierge && (
@@ -483,23 +466,27 @@ function App() {
     <footer>
       <div className="footer-main">
         <div className="footer-brand-block">
-          <a className="footer-logo" href="#home" aria-label="LifeWise home"><img src="/images/lifewise-logo.png" alt="LifeWise Counseling and Wellness" /></a>
+          <a className="footer-logo" href="/" aria-label="LifeWise home"><img src="/images/lifewise-logo.png" alt="LifeWise Counseling and Wellness" /></a>
           <p>Virtual counseling throughout Texas, with in-person care in North Fort Worth.</p>
         </div>
         <div className="footer-column">
           <h2>Explore</h2>
-          <a href="#support">Services</a>
-          <a href="#approach">Our approach</a>
-          <a href="#team">Meet the team</a>
-          <a href="#faq">FAQs</a>
+          <a href="/services/">Services</a>
+          <a href="/#approach">Our approach</a>
+          <a href="/careteam/">Meet the team</a>
+          <a href="/reflections/">Reflections</a>
+          <a href="/frequently-asked-questions/">FAQs</a>
         </div>
         <div className="footer-column">
           <h2>Helpful information</h2>
-          <a href="https://lifewisetx.com/pricing/">Insurance &amp; pricing</a>
-          <a href="https://lifewisetx.com/referral-partners/">Professional referrals</a>
-          <a href="https://lifewisetx.com/supervision/">LPC supervision</a>
-          <a href="https://lifewisetx.com/website-privacy-policy/">Privacy</a>
-          <a href="https://lifewisetx.com/client-information-and-website-disclosures/">Client rights &amp; disclosures</a>
+          <a href="/pricing/">Insurance &amp; pricing</a>
+          <a href="/referral-partners/">Professional referrals</a>
+          <a href="/supervision/">LPC supervision</a>
+          <a href="/website-privacy-policy/">Privacy</a>
+          <a href="/terms-of-use/">Terms of use</a>
+          <a href="/client-rights/">Client rights</a>
+          <a href="/good-faith-estimate/">Good Faith Estimate</a>
+          <a href="/client-information-and-website-disclosures/">Credentials &amp; disclosures</a>
         </div>
         <div className="footer-column footer-contact">
           <h2>Start a conversation</h2>
