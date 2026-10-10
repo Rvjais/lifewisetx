@@ -45,11 +45,11 @@ p { text-wrap: pretty; }
   letter-spacing: -.035em;
 }
 .hero-description { font-size: 18px; line-height: 1.7; margin: 24px 0 12px; }
-.hero-care-format { font-size: 14px; margin-bottom: 28px; }
-.hero-consultation-note { font-size: 12px; }
+.hero-care-format { font-size: 16px; margin-bottom: 28px; }
+.hero-consultation-note { font-size: 15px; }
 
 .eyebrow, .hero-eyebrow, .intro-tag {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.6;
   letter-spacing: .12em;
@@ -83,24 +83,24 @@ p { text-wrap: pretty; }
   letter-spacing: -.015em;
 }
 .area-card p, .reflection-body p, .coverage-card li,
-.faq-list details p { font-size: 15px; line-height: 1.75; }
-.team-person-copy p { font-size: 12px; line-height: 1.6; letter-spacing: .025em; }
+.faq-list details p { font-size: 16px; line-height: 1.75; }
+.team-person-copy p { font-size: 15px; line-height: 1.6; letter-spacing: .025em; }
 .faq-list summary { font-size: 16px; line-height: 1.5; }
-.area-tag-pill { font-size: 11px; line-height: 1.5; }
-.area-badge, .reflection-pill { font-size: 10px; letter-spacing: .05em; }
-.reflection-body time, .reflection-read-time, .reflection-author { font-size: 11px; }
+.area-tag-pill { font-size: 13px; line-height: 1.5; }
+.area-badge, .reflection-pill { font-size: 13px; letter-spacing: .05em; }
+.reflection-body time, .reflection-read-time, .reflection-author { font-size: 13px; }
 .under-link, .reflection-link, .referrals > a, .crisis > a,
-.closing > a, .sanctuary-cta { font-size: 13px; line-height: 1.6; }
+.closing > a, .sanctuary-cta { font-size: 15px; line-height: 1.6; }
 .philosophy-quote {
   font-size: clamp(25px, 2.8vw, 36px);
   line-height: 1.5;
   letter-spacing: -.015em;
 }
-.philosophy-caption { font-size: 10px; line-height: 1.7; letter-spacing: .1em; }
+.philosophy-caption { font-size: 13px; line-height: 1.7; letter-spacing: .1em; }
 .sanctuary-content > p { max-width: 60ch; font-size: 16px; line-height: 1.8; }
 .sanctuary-feature-card h4 { font-size: 17px; line-height: 1.4; }
-.sanctuary-feature-card p { font-size: 14px; line-height: 1.7; margin-bottom: 0; }
-.crisis > div > p:last-child { font-size: 14px; line-height: 1.7; }
+.sanctuary-feature-card p { font-size: 16px; line-height: 1.7; margin-bottom: 0; }
+.crisis > div > p:last-child { font-size: 16px; line-height: 1.7; }
 .crisis h2 { font-size: 18px; line-height: 1.5; letter-spacing: 0; }
 
 .intro, .support, .team-section, .reflections-section, .coverage, .faq {
@@ -118,8 +118,8 @@ p { text-wrap: pretty; }
 .intro-media-grid { gap: 16px; margin: 28px 0; }
 .intro-media-frame { height: clamp(160px, 15vw, 210px); }
 .intro-media-label { padding: 16px; }
-.intro-media-label strong { font-size: 14px; line-height: 1.5; }
-.intro-media-label span { font-size: 12px; line-height: 1.5; }
+.intro-media-label strong { font-size: 16px; line-height: 1.5; }
+.intro-media-label span { font-size: 15px; line-height: 1.5; }
 .section-head, .team-heading {
   align-items: end;
   gap: 40px;
@@ -131,9 +131,9 @@ p { text-wrap: pretty; }
 .area-card h3, .reflection-body h3 { margin-bottom: 12px; }
 .area-card-tags { gap: 8px; margin-top: 20px; }
 .population-row { margin-top: 40px; padding-top: 24px; }
-.population-row > p:last-child { font-size: 13px; line-height: 1.7; }
+.population-row > p:last-child { font-size: 15px; line-height: 1.7; }
 .recognition { padding: 24px var(--section-gutter); }
-.recognition p { font-size: 13px; line-height: 1.7; }
+.recognition p { font-size: 15px; line-height: 1.7; }
 .philosophy-section { padding: clamp(48px, 5vw, 72px) var(--section-gutter); }
 .philosophy-inner { max-width: 800px; margin: 0 auto; }
 .sanctuary-banner {
@@ -158,9 +158,9 @@ p { text-wrap: pretty; }
 footer { padding: 64px var(--section-gutter) 28px; }
 .footer-main { gap: 40px; }
 .footer-column { gap: 12px; }
-.footer-column h2 { font: 600 11px/1.6 var(--sans); letter-spacing: .1em; }
-.footer-column > a, .footer-brand-block p { font-size: 13px; line-height: 1.7; }
-.footer-column > small, .footer-bottom small { font-size: 11px; line-height: 1.7; }
+.footer-column h2 { font: 600 13px/1.6 var(--sans); letter-spacing: .1em; }
+.footer-column > a, .footer-brand-block p { font-size: 15px; line-height: 1.7; }
+.footer-column > small, .footer-bottom small { font-size: 13px; line-height: 1.7; }
 .footer-bottom { margin-top: 40px; padding-top: 24px; }
 
 /* Short entrance fades and small hover changes; no continuous decoration. */
@@ -256,10 +256,10 @@ html[data-theme="dark"] .coverage-card:hover {
   .intro-media-frame { height: 200px; }
   .area-card-body, .reflection-body { padding: 22px; }
   .team-person-copy h3 { font-size: 22px; }
-  .team-person-copy p { font-size: 11px; }
+  .team-person-copy p { font-size: 13px; }
   .sanctuary-banner { margin-inline: 12px; padding: 32px 20px; }
   .faq-list details, .faq-list details[open] { padding: 20px 8px; }
-  .faq-list summary { font-size: 15px; }
+  .faq-list summary { font-size: 16px; }
   .footer-main { gap: 28px; }
 }
 @media (hover: none) {
@@ -282,7 +282,7 @@ html[data-theme="dark"] .coverage-card:hover {
   align-items: center;
   gap: 14px;
   margin-bottom: 24px;
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: .18em;
 }
 .hero-eyebrow::before {
@@ -322,12 +322,12 @@ html[data-theme="dark"] .coverage-card:hover {
   letter-spacing: .005em;
 }
 .hero-description span { display: block; color: #e5ebdf; font-weight: 400; }
-.hero-care-format { font-size: 13px; line-height: 1.7; margin-bottom: 26px; }
+.hero-care-format { font-size: 15px; line-height: 1.7; margin-bottom: 26px; }
 .hero-action {
   gap: 24px;
   padding: 12px 14px 12px 22px;
   border-radius: 50px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: .015em;
 }
@@ -342,14 +342,14 @@ html[data-theme="dark"] .coverage-card:hover {
   font-size: 18px;
   line-height: 1;
 }
-.hero-consultation-note { margin-top: 12px; font-size: 11px; letter-spacing: .025em; }
+.hero-consultation-note { margin-top: 12px; font-size: 13px; letter-spacing: .025em; }
 @keyframes hero-type-arrival {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
 }
 @media (max-width: 760px) {
   .hero-content { width: min(100%, 450px); }
-  .hero-eyebrow { font-size: 9px; gap: 12px; letter-spacing: .13em; }
+  .hero-eyebrow { font-size: 13px; gap: 12px; letter-spacing: .13em; }
   .hero-eyebrow::before { flex-basis: 24px; }
   .hero-opening { font-size: clamp(80px, 18vw, 116px); }
   .hero-heading em { font-size: clamp(54px, 12.5vw, 84px); }

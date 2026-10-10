@@ -12,8 +12,9 @@ import os
 
 ROOT = Path(__file__).resolve().parents[1]
 pages = json.loads((ROOT / 'src/content.json').read_text(encoding='utf-8'))
-routes = ['/', '/reflections/', *pages]
-core = ['/', '/reflections/', *[route for route, data in pages.items() if not data['article']]]
+navigation_pages = json.loads((ROOT / 'src/navigation-pages.json').read_text(encoding='utf-8'))
+routes = ['/', '/reflections/', *pages, *navigation_pages]
+core = ['/', '/reflections/', *navigation_pages, *[route for route, data in pages.items() if not data['article']]]
 errors = []
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -74,10 +75,12 @@ try:
         page.go_back()
         assert 'Real people' in page.locator('h1').inner_text()
         page.get_by_role('navigation', name='Main navigation').get_by_role('link', name='Our approach', exact=True).click()
-        page.wait_for_url('**/#approach')
-        assert page.locator('#approach').is_visible()
-        assert page.evaluate('window.scrollY') > 100
-        print('PASS: client navigation, profile links, browser Back, and homepage anchors.', flush=True)
+        page.wait_for_url('**/our-approach/')
+        assert 'Care built around' in page.locator('h1').inner_text()
+        page.get_by_role('navigation', name='Main navigation').get_by_role('link', name='Sanctuary', exact=True).click()
+        page.wait_for_url('**/sanctuary/')
+        assert 'A little space' in page.locator('h1').inner_text()
+        print('PASS: client navigation, profile links, browser Back, and dedicated navbar pages.', flush=True)
 
         page.goto(base + '/reflections/', wait_until='load')
         assert page.locator('.journal-card').count() == 9
@@ -112,8 +115,19 @@ try:
         assert page.get_by_role('button', name='Open navigation').get_attribute('aria-expanded') == 'false'
         print('PASS: FAQ disclosure, original booking link, and mobile navigation.', flush=True)
 
-        # The service directory must open, navigate, and close with the keyboard.
+        # Hover must open the directory and remain usable when the pointer enters it.
         page.set_viewport_size({'width': 1440, 'height': 1000})
+        page.get_by_role('navigation', name='Main navigation').get_by_role('link', name='Services', exact=True).hover()
+        assert page.locator('#service-navigation').is_visible()
+        page.locator('#service-navigation').get_by_role('link', name='Trauma & recovery').hover()
+        page.wait_for_timeout(250)
+        assert page.locator('#service-navigation').is_visible()
+        page.mouse.move(20, 950)
+        page.wait_for_timeout(250)
+        assert not page.locator('#service-navigation').is_visible()
+        print('PASS: hover opens the service directory, preserves it across the pointer gap, and closes on exit.', flush=True)
+
+        # The service directory must also open, navigate, and close with the keyboard.
         page.get_by_role('button', name='Explore services', exact=True).click()
         assert page.locator('#service-navigation').is_visible()
         page.keyboard.press('Escape')

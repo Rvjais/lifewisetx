@@ -8,6 +8,8 @@ import './navigation.css';
 import './sections.css';
 import './pages.css';
 import './service-pages.css';
+import './navigation-pages.css';
+import './readability.css';
 
 document.documentElement.dataset.theme = 'light';
 createRoot(document.getElementById('root')).render(<App />);

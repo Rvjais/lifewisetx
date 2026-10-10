@@ -4,9 +4,10 @@ import { resolve } from 'node:path';
 // Real route entry files support direct visits on static hosts without a rewrite rule.
 const root = resolve(import.meta.dirname, '..');
 const pages = JSON.parse(await readFile(resolve(root, 'src/content.json'), 'utf8'));
+const navigationPages = JSON.parse(await readFile(resolve(root, 'src/navigation-pages.json'), 'utf8'));
 const template = await readFile(resolve(root, 'dist/index.html'), 'utf8');
 const escape = text => text.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
-const entries = { ...pages, '/reflections/': { title: 'LifeWise Reflections', excerpt: 'Thoughts on relationships, identity, emotional wellbeing, and the work of finding your way.' } };
+const entries = { ...pages, ...navigationPages, '/reflections/': { title: 'LifeWise Reflections', excerpt: 'Thoughts on relationships, identity, emotional wellbeing, and the work of finding your way.' } };
 for (const [route, page] of Object.entries(entries)) {
   const directory = resolve(root, 'dist', route.slice(1));
   await mkdir(directory, { recursive: true });

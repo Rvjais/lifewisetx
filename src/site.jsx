@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import InteriorPage, { usePageNavigation, services } from './pages.jsx';
 import SiteHeader from './navigation.jsx';
+import media from './media.json';
 
 const consultation = '/consultation/';
 const team = [
@@ -15,7 +16,8 @@ const areas = [
     href: '/anxiety-and-depression/',
     title: 'Individual Counseling & Anxiety',
     desc: 'Support for anxiety, panic, depression, burnout, chronic stress, and navigating high-pressure life transitions.',
-    image: '/images/service-anxiety.png',
+    image: media['home-anxiety'].src,
+    imageAlt: media['home-anxiety'].alt,
     badge: 'Virtual & In-Person',
     tags: ['Panic & Worry', 'Burnout Recovery', 'Somatic Soothing', 'Life Transitions'],
   },
@@ -24,7 +26,8 @@ const areas = [
     href: '/neurodivergence/',
     title: 'Neurodivergent & Affirming Care',
     desc: 'Respectful, neurodiversity-affirming counseling for ADHDers, autistic adults, late-diagnosed individuals, and LGBTQIA+ clients.',
-    image: '/images/service-neurodivergence.png',
+    image: media['home-neurodivergence'].src,
+    imageAlt: media['home-neurodivergence'].alt,
     badge: 'Affirming & Unmasking',
     tags: ['ADHD & Autism', 'Late Diagnosis', 'Unmasking Safely', 'Sensory Grounding'],
   },
@@ -33,7 +36,8 @@ const areas = [
     href: '/trauma/',
     title: 'Trauma & EMDR Processing',
     desc: 'Somatic, grounded support to process deep emotional wounds, PTSD, relational trauma, and rebuild a sense of safety.',
-    image: '/images/service-trauma.png',
+    image: media['home-trauma'].src,
+    imageAlt: media['home-trauma'].alt,
     badge: 'Somatic & EMDR',
     tags: ['PTSD & Flashbacks', 'Relational Wounds', 'EMDR Processing', 'Nervous System Safety'],
   },
@@ -42,7 +46,8 @@ const areas = [
     href: '/relationships/',
     title: 'Couples & Relationship Health',
     desc: 'Make room for clearer communication, de-escalating recurring conflict, and cultivating authentic emotional intimacy.',
-    image: '/images/service-relationships.png',
+    image: media['home-relationships'].src,
+    imageAlt: media['home-relationships'].alt,
     badge: 'Couples & Families',
     tags: ['Conflict De-escalation', 'Emotional Intimacy', 'Communication Habits', 'Secure Attachment'],
   },
@@ -190,7 +195,7 @@ function App() {
         <div className="intro-visual">
           <div className="intro-tag"><span className="outline-num">01</span> A PLACE TO START, AS YOU ARE</div>
           <figure className="intro-nature-frame">
-            <img src="/images/woodland-path.png" alt="A quiet woodland path surrounded by green ferns and soft golden sunlight" width="1024" height="1536" loading="lazy" decoding="async" />
+            <img src={media['home-intro'].src} alt={media['home-intro'].alt} width="1024" height="1536" loading="lazy" decoding="async" />
           </figure>
         </div>
         <div>
@@ -251,7 +256,7 @@ function App() {
           {areas.map((area) => (
             <a className="area-card area-card-link" href={area.href} key={area.num}>
               <div className="area-card-thumb">
-                <img src={area.image} alt={area.title} loading="lazy" />
+                <img src={area.image} alt={area.imageAlt} loading="lazy" />
                 <span className="area-badge">{area.badge}</span>
               </div>
               <div className="area-card-body">
@@ -472,7 +477,8 @@ function App() {
         <div className="footer-column">
           <h2>Explore</h2>
           <a href="/services/">Services</a>
-          <a href="/#approach">Our approach</a>
+          <a href="/our-approach/">Our approach</a>
+          <a href="/sanctuary/">Sanctuary</a>
           <a href="/careteam/">Meet the team</a>
           <a href="/reflections/">Reflections</a>
           <a href="/frequently-asked-questions/">FAQs</a>

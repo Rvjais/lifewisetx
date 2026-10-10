@@ -18,9 +18,9 @@ React and Vite are declared in `package.json` and installed locally by `npm inst
 
 Homepage markup is in `src/site.jsx`. Interior layouts and client navigation are in `src/pages.jsx`, with styles in `src/pages.css`. The source content is bundled in `src/content.json`; copied reference images live in `public/images/reference`.
 
-The seven service detail pages use `src/service-pages.jsx` and `src/service-pages.css` to present the reference content as image-led introductions, topic panels, editorial sections, counseling approach cards, and closing invitations. The shared framed navbar and service directory are in `src/navigation.jsx` and `src/navigation.css`. The homepage Sanctuary spans the full viewport width, with its content centered inside.
+The seven service detail pages use `src/service-pages.jsx` and `src/service-pages.css` to present the reference content as image-led introductions, topic panels, editorial sections, counseling approach cards, and closing invitations. The dedicated Our Approach and Sanctuary pages are in `src/navigation-pages.jsx`, with metadata in `src/navigation-pages.json`. Every primary navbar item opens its own page. The shared framed navbar and service directory, which open on desktop hover and mobile tap, are in `src/navigation.jsx` and `src/navigation.css`. The homepage Sanctuary spans the full viewport width, with its content centered inside.
 
-Interior service cards and page heroes use 19 distinct, locally stored Unsplash photographs. The manifest is in `src/media.json`, images are in `public/images/unsplash`, and sources are recorded in `docs/media-credits.md`. Articles without an original photo use text cards instead of a repeated fallback image. Logos and provider portraits retain their consistent identities.
+The site uses 26 people-focused Unsplash photographs and one garden photograph for the Sanctuary setting, all stored locally. The manifest is in `src/media.json`, images are in `public/images/unsplash`, and sources are recorded in `docs/media-credits.md`. Articles without an original photo use text cards instead of a repeated fallback image. Logos and provider portraits retain their consistent identities.
 
 Internal links stay in the local website. The consultation page opens the original Google booking calendar. Existing provider scheduling links remain in their profiles. No backend or contact-form submission service is required.
 
@@ -28,4 +28,4 @@ Internal links stay in the local website. The consultation page opens the origin
 
 ## Verification
 
-After a production build, `python scripts/check-site.py` runs an isolated headless browser against `dist`. It requires Python Playwright and Chromium. It checks all 62 routes, local links, browser errors, responsive widths, navigation and browser Back, search and category filters, load-more behavior, FAQs, and the original consultation calendar link. Visual review captures are in `docs/qa`.
+After a production build, `python scripts/check-site.py` runs an isolated headless browser against `dist`. It requires Python Playwright and Chromium. It checks all 64 routes, local links, browser errors, responsive widths, navigation and browser Back, search and category filters, load-more behavior, FAQs, and the original consultation calendar link. Visual review captures are in `docs/qa`.

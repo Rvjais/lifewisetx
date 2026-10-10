@@ -71,7 +71,7 @@ export default function ServiceDetailPage({ service, page, otherServices }) {
   const closingNodes = data.closing.nodes.filter(node => node.tagName === 'P' && !/^schedule a 15/i.test(node.textContent));
   return <div className="service-detail">
     <section className="service-hero">
-      <figure className="service-hero-photo"><img src={service.hero.src} alt={service.hero.alt} /><figcaption>{service.label}</figcaption></figure>
+      <figure className="service-hero-photo"><img src={service.hero.src} alt={service.hero.alt} style={{ objectPosition: service.hero.position || "center 35%" }} /><figcaption>{service.label}</figcaption></figure>
       <div className="service-hero-shade" aria-hidden="true" />
       <div className="service-hero-inner">
         <div className="service-breadcrumb"><a href="/">Home</a><span>/</span><a href="/services/">Our services</a><span>/</span><span>{service.title}</span></div>
@@ -97,7 +97,7 @@ export default function ServiceDetailPage({ service, page, otherServices }) {
     </section>
 
     <section className="service-understanding service-section">
-      <div className="service-understanding-photo"><img src={service.image} alt="" loading="lazy" /><span className="service-photo-seal" aria-hidden="true">ROOM TO<br /><em>be you.</em></span></div>
+      <div className="service-understanding-photo"><img src={service.image} alt={service.imageAlt} style={{ objectPosition: "center 35%" }} loading="lazy" /><span className="service-photo-seal" aria-hidden="true">ROOM TO<br /><em>be you.</em></span></div>
       <div className="service-story-stack"><p className="eyebrow">02 / UNDERSTANDING YOUR EXPERIENCE</p>{data.before.map(section => <article className="service-story" id={section.id} key={section.id}><h2>{section.title}</h2><RichBlocks nodes={section.nodes} /></article>)}</div>
     </section>
 

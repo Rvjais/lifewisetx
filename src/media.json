@@ -1,105 +1,105 @@
 {
   "services-overview": {
-    "source": "https://unsplash.com/photos/a-garden-path-leads-to-a-bench-Cvw5FkluFuA",
-    "cdn": "https://images.unsplash.com/photo-1747236343701-575c736654d6",
-    "alt": "A garden path leading toward a quiet bench",
-    "src": "/images/unsplash/services-overview.jpg"
+    "source": "https://unsplash.com/photos/friends-are-chatting-and-having-coffee-at-a-cafe-rioA77g2-XU",
+    "alt": "Friends sharing a conversation over coffee",
+    "cdn": "https://images.unsplash.com/photo-1753351055246-a7efae066eef",
+    "src": "/images/unsplash/services-overview-people.jpg"
   },
   "card-neurodivergence": {
-    "source": "https://unsplash.com/photos/notebook-and-pens-sit-bathed-in-sunlight-86hrH5OXNSc",
-    "cdn": "https://images.unsplash.com/photo-1743315713062-510e1a035c4e",
-    "alt": "A notebook and pens in warm sunlight",
-    "src": "/images/unsplash/card-neurodivergence.jpg"
+    "source": "https://unsplash.com/photos/a-woman-reads-a-book-while-relaxing-in-a-room-mcQAJp_HT8k",
+    "alt": "A woman reading in a comfortable chair",
+    "cdn": "https://images.unsplash.com/photo-1752940474236-a9cfa7658d57",
+    "src": "/images/unsplash/card-neurodivergence-people.jpg"
   },
   "card-relationships": {
-    "source": "https://unsplash.com/photos/people-hands-reaching-out-01EIiXiLPCk",
-    "cdn": "https://images.unsplash.com/photo-1574740601984-f8a432296f78",
-    "alt": "Two people gently reaching for each other’s hands",
-    "src": "/images/unsplash/card-relationships.jpg"
+    "source": "https://unsplash.com/photos/two-men-sitting-at-a-table-talking-FGBBmEUzFIg",
+    "alt": "Two men sharing a conversation at a table",
+    "cdn": "https://images.unsplash.com/photo-1769874826413-912e888c4f40",
+    "src": "/images/unsplash/card-relationships-people.jpg"
   },
   "card-stress": {
-    "source": "https://unsplash.com/photos/autumn-forest-reflected-in-a-calm-lake-JwEQrG8Oh3w",
-    "cdn": "https://images.unsplash.com/photo-1768847074574-c48a3bb4b391",
-    "alt": "Autumn trees reflected in a quiet lake",
-    "src": "/images/unsplash/card-stress.jpg"
+    "source": "https://unsplash.com/photos/woman-working-at-a-desk-with-laptop-and-notebook-CFHsasTZQsY",
+    "alt": "A woman taking notes at her desk",
+    "cdn": "https://images.unsplash.com/photo-1758876201901-68f8f413bf4c",
+    "src": "/images/unsplash/card-stress-people.jpg"
   },
   "card-life-challenges": {
-    "source": "https://unsplash.com/photos/park-bench-by-a-tree-lined-path-with-dappled-sunlight-TMA2Cev1EPM",
-    "cdn": "https://images.unsplash.com/photo-1765963168771-c82f720fe2af",
-    "alt": "A shaded park bench beside a tree-lined path",
-    "src": "/images/unsplash/card-life-challenges.jpg"
+    "source": "https://unsplash.com/photos/group-of-friends-sitting-together-outdoors-Z-Vwo5bY76o",
+    "alt": "Friends sitting together outdoors",
+    "cdn": "https://images.unsplash.com/photo-1759108749177-f8dc6277738a",
+    "src": "/images/unsplash/card-life-challenges-people.jpg"
   },
   "card-lgbtq": {
-    "source": "https://unsplash.com/photos/a-group-of-people-putting-their-hands-together-K7IvqBpE5uY",
-    "cdn": "https://images.unsplash.com/photo-1740065592719-052d3e5ec6fb",
-    "alt": "A group of friends placing their hands together",
-    "src": "/images/unsplash/card-lgbtq.jpg"
+    "source": "https://unsplash.com/photos/group-of-friends-laughing-together-outdoors-FYq7zbi7iRE",
+    "alt": "A group of friends laughing together outdoors",
+    "cdn": "https://images.unsplash.com/photo-1755705153160-67b29c7718ee",
+    "src": "/images/unsplash/card-lgbtq-faces.jpg"
   },
   "hero-anxiety": {
-    "source": "https://unsplash.com/photos/calm-lake-reflects-trees-in-a-serene-forest-setting-o4jZKtM39ns",
-    "cdn": "https://images.unsplash.com/photo-1776428215186-1ef8b678f9e9",
-    "alt": "A peaceful forest surrounding calm water",
-    "src": "/images/unsplash/hero-anxiety.jpg"
+    "source": "https://unsplash.com/photos/two-women-talking-in-a-therapy-session-rG5elqddGzo",
+    "alt": "Two women having a one-to-one conversation indoors",
+    "cdn": "https://images.unsplash.com/photo-1758273241078-8eec353836be",
+    "src": "/images/unsplash/hero-anxiety-people.jpg"
   },
   "hero-neurodivergence": {
-    "source": "https://unsplash.com/photos/sunlight-streams-through-plants-onto-a-chair-Y-95B4hj9Bk",
-    "cdn": "https://images.unsplash.com/photo-1775480393107-666e3cd44ab8",
-    "alt": "Sunlight falling through plants onto a chair",
-    "src": "/images/unsplash/hero-neurodivergence.jpg"
+    "source": "https://unsplash.com/photos/young-woman-looking-out-a-window-thoughtfully-VAKvEL5Njuo",
+    "alt": "A young woman looking thoughtfully through a window",
+    "cdn": "https://images.unsplash.com/photo-1771199918850-b66326cbccf5",
+    "src": "/images/unsplash/hero-neurodivergence-people.jpg"
   },
   "hero-trauma": {
-    "source": "https://unsplash.com/photos/a-park-pathway-with-a-bench-under-sunlight-b6Ny1ok2dN4",
-    "cdn": "https://images.unsplash.com/photo-1760123662754-76136630b783",
-    "alt": "A quiet park pathway and bench in sunlight",
-    "src": "/images/unsplash/hero-trauma.jpg"
+    "source": "https://unsplash.com/photos/a-man-looking-out-the-window-of-a-building-oI_qUeXKVJk",
+    "alt": "A man pausing beside a window",
+    "cdn": "https://images.unsplash.com/photo-1678882949662-124607a63479",
+    "src": "/images/unsplash/hero-trauma-people.jpg"
   },
   "hero-relationships": {
-    "source": "https://unsplash.com/photos/woman-and-man-holding-hands-0EVKn3-5JSU",
-    "cdn": "https://images.unsplash.com/photo-1495653797063-114787b77b23",
-    "alt": "Two people holding hands in a gesture of connection",
-    "src": "/images/unsplash/hero-relationships.jpg"
+    "source": "https://unsplash.com/photos/two-women-talking-while-sitting-outdoors-DkHva1p24Bk",
+    "alt": "Two women listening and talking together",
+    "cdn": "https://images.unsplash.com/photo-1759593047650-60328e9356ba",
+    "src": "/images/unsplash/hero-relationships-people.jpg"
   },
   "hero-stress": {
-    "source": "https://unsplash.com/photos/forest-reflected-in-calm-water-under-clear-sky-ntlS54dvmMg",
-    "cdn": "https://images.unsplash.com/photo-1767872468916-224dd8bfd935",
-    "alt": "Still water reflecting a forest and open sky",
-    "src": "/images/unsplash/hero-stress.jpg"
+    "source": "https://unsplash.com/photos/woman-working-on-a-laptop-at-a-desk-RBNke8acxDM",
+    "alt": "A woman working at a laptop",
+    "cdn": "https://images.unsplash.com/photo-1758598306663-4874b2aff114",
+    "src": "/images/unsplash/hero-stress-people.jpg"
   },
   "card-anxiety": {
-    "source": "https://unsplash.com/photos/calm-lake-reflecting-a-dense-evergreen-forest-and-sky-2ylHzw7fgn4",
-    "cdn": "https://images.unsplash.com/photo-1769504030606-117b22bd4c4e",
-    "alt": "Evergreen trees reflected in still lake water",
-    "src": "/images/unsplash/card-anxiety.jpg"
+    "source": "https://unsplash.com/photos/a-thoughtful-woman-looks-out-a-window-swn1SJOdmtU",
+    "alt": "A thoughtful portrait of a woman beside a window",
+    "cdn": "https://images.unsplash.com/photo-1753631841720-46d656208dfb",
+    "src": "/images/unsplash/card-anxiety-people.jpg"
   },
   "card-trauma": {
-    "source": "https://unsplash.com/photos/bench-beside-plants-and-grass-pathway-bpbVDNw5sBg",
-    "cdn": "https://images.unsplash.com/photo-1570086625957-91c7d5018340",
-    "alt": "A garden lawn with benches and flowering plants",
-    "src": "/images/unsplash/card-trauma.jpg"
+    "source": "https://unsplash.com/photos/a-man-sitting-on-a-couch-talking-to-another-man-N5GljcLSmK4",
+    "alt": "Two men talking together on a couch",
+    "cdn": "https://images.unsplash.com/photo-1683272468278-3ba6633c15a4",
+    "src": "/images/unsplash/card-trauma-people.jpg"
   },
   "hero-lgbtq": {
-    "source": "https://unsplash.com/photos/two-people-sitting-and-talking-on-a-rooftop-qfBvKGEwPeQ",
-    "cdn": "https://images.unsplash.com/photo-1772471754740-6e1e6dfd17e5",
-    "alt": "Two neighbors sharing a conversation on a rooftop",
-    "src": "/images/unsplash/hero-lgbtq.jpg"
+    "source": "https://unsplash.com/photos/three-women-laughing-while-sitting-near-flowers-jLH2jMEL6Ls",
+    "alt": "Three friends sharing a laugh together",
+    "cdn": "https://images.unsplash.com/photo-1555819207-d089c9205ba5",
+    "src": "/images/unsplash/hero-lgbtq-faces.jpg"
   },
   "hero-consultation": {
-    "source": "https://unsplash.com/photos/sunlight-streaming-through-window-onto-chairs-and-plants-URmKQZgfTBk",
-    "cdn": "https://images.unsplash.com/photo-1757940059494-90b862afebb8",
-    "alt": "Natural light falling across chairs and indoor plants",
-    "src": "/images/unsplash/hero-consultation.jpg"
+    "source": "https://unsplash.com/photos/therapist-talking-to-a-young-woman-on-couch-PYbWNtXcpjM",
+    "alt": "Two women having a conversation in a bright sitting room",
+    "cdn": "https://images.unsplash.com/photo-1758273240403-052b3c99f636",
+    "src": "/images/unsplash/hero-consultation-people.jpg"
   },
   "hero-supervision": {
-    "source": "https://unsplash.com/photos/an-open-notebook-and-pens-on-a-desk-hBdaqrr5Z3k",
-    "cdn": "https://images.unsplash.com/photo-1743385779312-73ea241025d8",
-    "alt": "An open notebook and pens prepared for reflection",
-    "src": "/images/unsplash/hero-supervision.jpg"
+    "source": "https://unsplash.com/photos/two-colleagues-discussing-work-at-a-table-XJ0afa1D6ZU",
+    "alt": "Two colleagues discussing their work",
+    "cdn": "https://images.unsplash.com/photo-1783061044343-69dc0c78ad87",
+    "src": "/images/unsplash/hero-supervision-people.jpg"
   },
   "hero-career": {
-    "source": "https://unsplash.com/photos/desk-with-laptop-sticky-notes-and-sunlight-J7vp4RK-FPY",
-    "cdn": "https://images.unsplash.com/photo-1766555766657-ea8f81a67934",
-    "alt": "A desk with a laptop and planning notes in sunlight",
-    "src": "/images/unsplash/hero-career.jpg"
+    "source": "https://unsplash.com/photos/people-sitting-on-chair-inside-building-ONe-snuCaqQ",
+    "alt": "A group of colleagues talking in a meeting room",
+    "cdn": "https://images.unsplash.com/photo-1606836591695-4d58a73eba1e",
+    "src": "/images/unsplash/hero-career-people.jpg"
   },
   "hero-referrals": {
     "source": "https://unsplash.com/photos/two-elderly-women-sitting-and-talking-6RZXBjjAtbU",
@@ -108,9 +108,57 @@
     "src": "/images/unsplash/hero-referrals.jpg"
   },
   "hero-life-challenges": {
-    "source": "https://unsplash.com/photos/a-calm-lake-reflects-a-forested-mountain-slope-8WVOw5XMTd4",
-    "cdn": "https://images.unsplash.com/photo-1771680769938-0b692872d455",
-    "alt": "A mountain slope and forest reflected in a tranquil lake",
-    "src": "/images/unsplash/hero-life-challenges.jpg"
+    "source": "https://unsplash.com/photos/woman-looking-out-a-large-bay-window-hKMm6lw_HQM",
+    "alt": "A woman sitting near a bright window",
+    "cdn": "https://images.unsplash.com/photo-1761389294347-4e7b17731a5b",
+    "src": "/images/unsplash/hero-life-challenges-people.jpg"
+  },
+  "sanctuary-garden": {
+    "source": "https://unsplash.com/photos/a-garden-path-leads-to-a-bench-Cvw5FkluFuA",
+    "cdn": "https://images.unsplash.com/photo-1747236343701-575c736654d6",
+    "alt": "A quiet garden path with a bench and flowering plants",
+    "src": "/images/unsplash/services-overview.jpg"
+  },
+  "home-intro": {
+    "source": "https://unsplash.com/photos/two-women-talking-at-an-outdoor-cafe-fqQvsxBvLdQ",
+    "alt": "Two friends having a conversation over coffee",
+    "cdn": "https://images.unsplash.com/photo-1758525226586-c9b75017de26",
+    "src": "/images/unsplash/home-intro-faces.jpg"
+  },
+  "home-anxiety": {
+    "source": "https://unsplash.com/photos/two-women-talking-at-a-cafe-with-coffee-t7Mq-RhXRmI",
+    "alt": "Two people talking over coffee",
+    "cdn": "https://images.unsplash.com/photo-1758525225910-3a1bc2e7f452",
+    "src": "/images/unsplash/home-anxiety-people.jpg"
+  },
+  "home-neurodivergence": {
+    "source": "https://unsplash.com/photos/a-person-leaning-on-a-window-8WuihNcj9Ag",
+    "alt": "A candid portrait of a person beside a window",
+    "cdn": "https://images.unsplash.com/photo-1662659443174-4d404d4026d1",
+    "src": "/images/unsplash/home-neurodivergence-people.jpg"
+  },
+  "home-trauma": {
+    "source": "https://unsplash.com/photos/two-men-sitting-at-a-table-talking-to-each-other-CLhULgqR-xg",
+    "alt": "Two men listening and speaking at a table",
+    "cdn": "https://images.unsplash.com/photo-1681569685382-e75f0301584e",
+    "src": "/images/unsplash/home-trauma-people.jpg"
+  },
+  "home-relationships": {
+    "source": "https://unsplash.com/photos/two-people-sitting-and-talking-on-a-rooftop-qfBvKGEwPeQ",
+    "cdn": "https://images.unsplash.com/photo-1772471754740-6e1e6dfd17e5",
+    "alt": "Two neighbors sharing a conversation on a rooftop",
+    "src": "/images/unsplash/hero-lgbtq.jpg"
+  },
+  "approach-hero": {
+    "source": "https://unsplash.com/photos/people-laughing-and-talking-outside-during-daytime-nF8xhLMmg0c",
+    "alt": "People sharing a warm conversation outdoors",
+    "cdn": "https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a",
+    "src": "/images/unsplash/approach-hero-faces.jpg"
+  },
+  "approach-conversation": {
+    "source": "https://unsplash.com/photos/four-men-sitting-beside-table-IRDPRsdozLI",
+    "alt": "A group of friends in conversation",
+    "cdn": "https://images.unsplash.com/photo-1540634759006-203f597e1a34",
+    "src": "/images/unsplash/approach-conversation-people.jpg"
   }
 }

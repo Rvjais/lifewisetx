@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import content from './content.json';
 import media from './media.json';
 import ServiceDetailPage from './service-pages.jsx';
+import { ApproachPage, SanctuaryPage } from './navigation-pages.jsx';
+import navigationPages from './navigation-pages.json';
 
 export const bookingUrl = 'https://calendar.app.google/nyiYDRBgML4yuVa39';
 export const providers = [
@@ -13,13 +15,13 @@ export const providers = [
 ];
 
 export const services = [
-  { path: '/anxiety-and-depression/', title: 'Anxiety & depression', image: media['card-anxiety'].src, hero: media['hero-anxiety'], label: 'A little room to breathe', desc: 'Understand what feels overwhelming, reconnect with yourself, and find a way forward.' },
-  { path: '/neurodivergence/', title: 'Neurodivergent care', image: media['card-neurodivergence'].src, hero: media['hero-neurodivergence'], label: 'Care that works with your brain', desc: 'Explore ADHD, masking, sensory needs, executive functioning, and your own ways of being.' },
-  { path: '/trauma/', title: 'Trauma & recovery', image: media['card-trauma'].src, hero: media['hero-trauma'], label: 'Safety at your own pace', desc: 'Make sense of survival patterns and build more room for trust, connection, and choice.' },
-  { path: '/relationships/', title: 'Relationships & connection', image: media['card-relationships'].src, hero: media['hero-relationships'], label: 'Find your way back to each other', desc: 'Support for individuals, couples, and families navigating communication, conflict, and trust.' },
-  { path: '/stress/', title: 'Stress & burnout', image: media['card-stress'].src, hero: media['hero-stress'], label: 'Make room for recovery', desc: 'Explore ongoing pressure, protect your energy, and develop more sustainable boundaries.' },
-  { path: '/life-challenges/', title: 'Life changes & loss', image: media['card-life-challenges'].src, hero: media['hero-life-challenges'], label: 'A place for the next chapter', desc: 'Space to process grief, transitions, uncertainty, identity shifts, and difficult decisions.' },
-  { path: '/lgbtq-affirmative-support/', title: 'LGBTQIA+ affirming support', image: media['card-lgbtq'].src, hero: media['hero-lgbtq'], label: 'Show up as yourself', desc: 'Welcoming care that sees the whole person and follows what matters to you.' },
+  { path: '/anxiety-and-depression/', title: 'Anxiety & depression', image: media['card-anxiety'].src, imageAlt: media['card-anxiety'].alt, hero: media['hero-anxiety'], label: 'A little room to breathe', desc: 'Understand what feels overwhelming, reconnect with yourself, and find a way forward.' },
+  { path: '/neurodivergence/', title: 'Neurodivergent care', image: media['card-neurodivergence'].src, imageAlt: media['card-neurodivergence'].alt, hero: media['hero-neurodivergence'], label: 'Care that works with your brain', desc: 'Explore ADHD, masking, sensory needs, executive functioning, and your own ways of being.' },
+  { path: '/trauma/', title: 'Trauma & recovery', image: media['card-trauma'].src, imageAlt: media['card-trauma'].alt, hero: media['hero-trauma'], label: 'Safety at your own pace', desc: 'Make sense of survival patterns and build more room for trust, connection, and choice.' },
+  { path: '/relationships/', title: 'Relationships & connection', image: media['card-relationships'].src, imageAlt: media['card-relationships'].alt, hero: media['hero-relationships'], label: 'Find your way back to each other', desc: 'Support for individuals, couples, and families navigating communication, conflict, and trust.' },
+  { path: '/stress/', title: 'Stress & burnout', image: media['card-stress'].src, imageAlt: media['card-stress'].alt, hero: media['hero-stress'], label: 'Make room for recovery', desc: 'Explore ongoing pressure, protect your energy, and develop more sustainable boundaries.' },
+  { path: '/life-challenges/', title: 'Life changes & loss', image: media['card-life-challenges'].src, imageAlt: media['card-life-challenges'].alt, hero: media['hero-life-challenges'], label: 'A place for the next chapter', desc: 'Space to process grief, transitions, uncertainty, identity shifts, and difficult decisions.' },
+  { path: '/lgbtq-affirmative-support/', title: 'LGBTQIA+ affirming support', image: media['card-lgbtq'].src, imageAlt: media['card-lgbtq'].alt, hero: media['hero-lgbtq'], label: 'Show up as yourself', desc: 'Welcoming care that sees the whole person and follows what matters to you.' },
 ];
 
 const legalPaths = ['/client-rights/', '/good-faith-estimate/', '/website-privacy-policy/', '/terms-of-use/', '/client-information-and-website-disclosures/'];
@@ -60,7 +62,7 @@ export function usePageNavigation() {
     return () => { window.removeEventListener('popstate', sync); document.removeEventListener('click', navigate); };
   }, []);
   useEffect(() => {
-    const page = content[path];
+    const page = content[path] || navigationPages[path];
     document.title = path === '/' ? 'LifeWise Counseling | Texas & North Fort Worth' : `${page?.title || (path === '/reflections/' ? 'Reflections' : 'Page not found')} | LifeWise Counseling`;
     document.querySelector('meta[name="description"]')?.setAttribute('content', page?.excerpt || 'Thoughtful counseling and wellness in North Fort Worth and throughout Texas.');
     const frame = requestAnimationFrame(() => {
@@ -100,7 +102,7 @@ function Closing({ professional = false }) {
 function ServicesPage() {
   return <><Hero eyebrow="OUR SERVICES" title="Support for the life" accent="you’re living." description="You don’t have to know exactly what kind of support you need. We’ll help you find the care and the person that feel right for you." image={media['services-overview'].src} imageAlt={media['services-overview'].alt}><Button /><a className="page-text-link" href="/careteam/">Meet your care team ↗</a></Hero>
     <section className="page-section"><div className="page-section-heading"><div><p className="eyebrow">ROOM FOR YOUR STORY</p><h2>Different needs.<br /><em>Thoughtful care.</em></h2></div><p>Individual, couples, and family counseling for adults. Online throughout Texas, with in-person care in select locations.</p></div>
-      <div className="service-page-grid">{services.map((service, i) => <a className="service-page-card" href={service.path} key={service.path}><div className="service-page-image"><img src={service.image} alt="" loading="lazy" /><span>{String(i + 1).padStart(2, '0')}</span></div><div className="service-page-copy"><p className="eyebrow">{service.label}</p><h3>{service.title}<span aria-hidden="true">↗</span></h3><p>{service.desc}</p><span className="page-text-link">Explore this care</span></div></a>)}</div>
+      <div className="service-page-grid">{services.map((service, i) => <a className="service-page-card" href={service.path} key={service.path}><div className="service-page-image"><img src={service.image} alt={service.imageAlt} loading="lazy" /><span>{String(i + 1).padStart(2, '0')}</span></div><div className="service-page-copy"><p className="eyebrow">{service.label}</p><h3>{service.title}<span aria-hidden="true">↗</span></h3><p>{service.desc}</p><span className="page-text-link">Explore this care</span></div></a>)}</div>
     </section><section className="page-section page-section--sage"><div className="page-section-heading"><div><p className="eyebrow">BEYOND THE COUNSELING ROOM</p><h2>Care for those<br /><em>who care for others.</em></h2></div></div><div className="page-two-grid"><a className="page-feature" href="/supervision/"><span className="eyebrow">FOR DEVELOPING COUNSELORS</span><h3>Supervision & career development</h3><p>Build clinical confidence, ethical judgment, and a sustainable counseling career.</p><span className="page-text-link">Explore the program ↗</span></a><a className="page-feature" href="https://steelarmormindset.com/" target="_blank" rel="noopener noreferrer"><span className="eyebrow">FIRST RESPONDERS & VETERANS</span><h3>Steel Armor Mindset</h3><p>Nonclinical resilience and mental readiness programming for service-oriented communities.</p><span className="page-text-link">Visit Steel Armor Mindset ↗</span></a></div></section><Closing /></>;
 }
 
@@ -176,7 +178,9 @@ function EditorialPage({ page, path }) {
 export default function InteriorPage({ path }) {
   const page = content[path];
   let view;
-  if (path === '/services/') view = <ServicesPage />;
+  if (path === '/our-approach/') view = <ApproachPage />;
+  else if (path === '/sanctuary/') view = <SanctuaryPage />;
+  else if (path === '/services/') view = <ServicesPage />;
   else if (path === '/careteam/') view = <TeamPage />;
   else if (path === '/pricing/') view = <PricingPage />;
   else if (path === '/consultation/') view = <ConsultationPage />;
